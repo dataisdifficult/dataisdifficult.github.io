@@ -6,6 +6,8 @@ project:
 
 website:
   title: "dataisdifficult.github.io"
+  about:
+    template: jolla
   navbar:
     left:
       - href: index.qmd
