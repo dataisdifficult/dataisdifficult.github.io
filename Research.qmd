@@ -1,0 +1,7 @@
+---
+title: "Research"
+---
+
+Here are some of my papers
+
+My latest paper is ['The Long Term Impact of War on Life Satisfaction' (with Jemesa Landers and Andrea Menclova )](https://dataisdifficult.github.io/PAPERLongTermImpactofWaronLifeSatisfaction.html).

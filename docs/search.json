@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "dataisdifficult.github.io",
+    "title": "Data is Difficult!",
     "section": "",
-    "text": "hello it’s Tom here\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2\n\n\ntom next attempt"
+    "text": "This is Tom Coupé’s website!\nI am professor of economics at the University of Canterbury. My teaching and research focus on data analysis!\nAs you might notice, I am experimenting with Quarto!"
   },
   {
     "objectID": "about.html",
@@ -75,5 +75,26 @@
     "title": "The Long-Term Impact of Experiencing War on Life Satisfaction - Evidence from the Life in Transition Survey",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nUsing LITSIII, Adsera et al. (2020) measures war experience by whether the respondent was less than 2 years old during World War II or a more recent war. They do not show the estimates of this variable suggesting it was insignificant. Recher (2022) regresses the absolute value of the difference between the life satisfaction in various locations on differences in war experience (both recent wars and World War II), and finds a significant relationship. However, given absolute values are taken, one can not distinguish whether war has a negative or a positive effect. We will not consider these papers as our focus is on the impact of personally experiencing the impact of war (rather than living in/being born in a country affected by war). Similarly, our analysis ignores the impact on the life satisfaction of those killed during the war.↩︎\nOne reason for the difference in methodological choices could be differences in the goal of the analysis: Kijewski (2020) and Child and Nikolova (2020) focuse on the impact of war on life satisfaction. Ivlevs (2015) uses war as an instrumental variable for life satisfaction, while focusing on what drives migration decisions. Djankov, Nikolova, and Zilinsky (2016) and Nikolova and Sanfey (2016) use war as a control variable in a happiness regression, while focusing on the happiness gap between transition and non-transition countries, and differences across various measures of life satisfaction respectively.↩︎\nThe 1-10 scale comes from the question: “All things considered, how satisfied or dissatisfied are you with your life as a whole -these days? Please answer on a scale from 1 to 10, where 1 means completely dissatisfied and 10 means completely satisfied.” The 1 to 5 scale comes from the question: ‘All things considered, I am satisfied with my life now’, with 1 meaning strongly disagree and 5 meaning strongly agree.↩︎\nWe use the most flexible specification of this common set. That is, we do not aggregate categories of categorical variables. We do not include a subset that excludes Kosovo because Kosovo represents a very small share of the overall sample (about 3%).↩︎\nWe use the specr R package (Masur and Scharkow (2020)) for the specification analysis and the Stargazer package for the regression output (Hlavac (2022))↩︎"
+  },
+  {
+    "objectID": "Teaching.html",
+    "href": "Teaching.html",
+    "title": "Teaching",
+    "section": "",
+    "text": "Here are the courses I teach at UC\nTBC"
+  },
+  {
+    "objectID": "About.html",
+    "href": "About.html",
+    "title": "About",
+    "section": "",
+    "text": "This page is called Dataisdifficult because analyzing data is difficult!"
+  },
+  {
+    "objectID": "Research.html",
+    "href": "Research.html",
+    "title": "Research",
+    "section": "",
+    "text": "Here are some of my papers\nMy latest paper is ‘The Long Term Impact of War on Life Satisfaction’ (with Jemesa Landers and Andrea Menclova )."
   }
 ]

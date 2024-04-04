@@ -2,10 +2,4 @@
 title: "About"
 ---
 
-About this site of Tom
-
-```{r}
-1 + 1
-```
-
-hzllo
+This page is called Dataisdifficult because analyzing data is difficult!

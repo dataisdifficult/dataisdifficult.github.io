@@ -1,16 +1,11 @@
 ---
-title: "dataisdifficult.github.io"
+title: "Data is Difficult!"
+about:
+  template: solana
 ---
-hello it's Tom here
 
-This is a Quarto website.
+This is Tom Coupé's website!
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+I am professor of economics at the University of Canterbury. My teaching and research focus on data analysis!
 
-```{r}
-1 + 1
-```
-
-tom next attempt
-
-
+As you might notice, I am experimenting with Quarto!

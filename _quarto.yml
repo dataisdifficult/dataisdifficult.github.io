@@ -6,14 +6,13 @@ project:
 
 website:
   title: "dataisdifficult.github.io"
-  about:
-    template: jolla
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
-      - PAPERLongTermImpactofWaronLifeSatisfaction.qmd
+      - Teaching.qmd
+      - Research.qmd
+      - About.qmd
 
 format:
   html:
