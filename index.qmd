@@ -1,11 +1,26 @@
 ---
-title: "Data is Difficult!"
 about:
-  template: solana
+  template: trestles
+  links:
+    - icon: twitter
+      text: twitter
+      href: https://twitter.com/TomCoupe10
+    - icon: github
+      text: Github
+      href: https://github.com/dataisdifficult
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/tom-coup%C3%A9-6435005/
+
+image: Tom.jfif
 ---
 
-This is Tom Coupé's website!
+**Welcome to my website!**
 
-I am professor of economics at the University of Canterbury. My teaching and research focus on data analysis!
+I am professor of economics at the [University of Canterbury](https://www.canterbury.ac.nz/).
 
-As you might notice, I am experimenting with Quarto!
+My teaching and research focus on data analysis. Examples of my research and teaching can be found under tabs above.
+
+As you might notice, I am experimenting with [Quarto](https://quarto.org/) and [Github](https://github.com/dataisdifficult).
+
+Tom Coupé

@@ -2,6 +2,14 @@
 title: "Teaching"
 ---
 
-Here are the courses I teach at UC
+At UC, I teach
 
-TBC
+[Advanced Econometrics](https://courseinfo.canterbury.ac.nz/GetCourseDetails.aspx?course=ECON631&year=2024)
+
+[Economic Analysis of Big Data](https://courseinfo.canterbury.ac.nz/GetCourseDetails.aspx?course=ECON314&year=2024)
+
+Introductory Econometrics as part of the course on [Quantitative Finance and Economics](https://courseinfo.canterbury.ac.nz/GetCourseDetails.aspx?course=FIEC601&occurrence=24SU1(C)&year=2024)
+
+Forecasting as part of the course on [Advanced Applications in Finance and Economics](https://courseinfo.canterbury.ac.nz/GetCourseDetails.aspx?course=FIEC675&occurrence=23SU2(C)&year=2024)
+
+In the past, I have taught courses on the economics of innovation \[MA\], corporate finance \[MA\], labor economics \[MA\] and Data Informed Strategy \[MBA\]

@@ -2,4 +2,4 @@
 title: "About"
 ---
 
-This page is called Dataisdifficult because analyzing data is difficult!
+My Github page is called Dataisdifficult because analyzing data is difficult!
