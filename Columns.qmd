@@ -1,0 +1,24 @@
+---
+title: "Columns"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+I have written columns for:
+
+[The Replication Network](https://replicationnetwork.com/)
+
+[Interest.co.nz](https://www.interest.co.nz/)
+
+[Tourism Ticker](https://www.tourismticker.com/)
+
+[NBR](https://www.nbr.co.nz/)
+
+[The Conversation](https://theconversation.com/nz)
+
+[VoxUkraine](https://voxukraine.org/en/)
+
+[VoxEU](https://cepr.org/voxeu)
+
+Forbes (Ukraine), Investgazeta and various other Ukrainian publications

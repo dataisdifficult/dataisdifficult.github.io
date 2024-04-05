@@ -33,5 +33,26 @@
     "title": "About",
     "section": "",
     "text": "My Github page is called Dataisdifficult because analyzing data is difficult!"
+  },
+  {
+    "objectID": "Columns.html",
+    "href": "Columns.html",
+    "title": "Columns",
+    "section": "",
+    "text": "I have written columns for:\nThe Replication Network\nInterest.co.nz\nTourism Ticker\nNBR\nThe Conversation\nVoxUkraine\nVoxEU\nForbes (Ukraine), Investgazeta and various other Ukrainian publications"
+  },
+  {
+    "objectID": "Moocs.html",
+    "href": "Moocs.html",
+    "title": "Moocs",
+    "section": "",
+    "text": "I have contributed to two EDX MOOCs:\nIntroducing Text Analytics and Natural Language Processing with Python\nVisualizing Text Analytics and Natural Language Processing with Python"
+  },
+  {
+    "objectID": "NEP.html",
+    "href": "NEP.html",
+    "title": "NEP",
+    "section": "",
+    "text": "I am the editor for NEP-big data, the Big Data mailing list of RePEc’s New Economic Papers"
   }
 ]

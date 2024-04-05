@@ -1,0 +1,8 @@
+---
+title: "NEP"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+I am the editor for [NEP-big data](https://nep.repec.org/nep-big.html), the Big Data mailing list of RePEc's New Economic Papers

@@ -12,6 +12,9 @@ website:
         text: Home
       - Teaching.qmd
       - Research.qmd
+      - Columns.qmd
+      - Moocs.qmd
+      - NEP.qmd
       
 
 format:

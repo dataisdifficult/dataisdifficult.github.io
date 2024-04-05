@@ -1,0 +1,12 @@
+---
+title: "Moocs"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+I have contributed to two EDX MOOCs:
+
+[Introducing Text Analytics and Natural Language Processing with Python](https://www.edx.org/learn/data-mining/university-of-canterbury-text-analytics-1-introduction-to-natural-language-processing)
+
+[Visualizing Text Analytics and Natural Language Processing with Python](https://www.edx.org/learn/natural-language-processing/university-of-canterbury-text-analytics-2-visualizing-natural-language-processing)
