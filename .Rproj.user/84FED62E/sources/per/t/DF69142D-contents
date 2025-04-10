@@ -1,0 +1,2114 @@
+---
+title: "The Impact of Generative AI on Productivity - Results of an Early Meta-Analysis"
+date: 04/10/2025
+author:
+  - name: Tom Coupé
+    email: tom.coupe@canterbury.ac.nz
+    corresponding: TRUE
+    acknowledgements: "We would like to thank Tomas Havranek, Bob Reed and participants to Tomas Havranek's meta-analysis course at the University of Canterbury, Christchurch for comments."
+    affiliation:  
+      - name: University of Canterbury
+        city: Christchurch
+  - name: Allen Wu
+    affiliation: 
+      - name: University of Canterbury
+        city: Christchurch
+keywords:
+  - Generative AI
+  - Productivity
+  - Meta-Analysis
+abstract: "This paper uses meta-analysis to summarize the literature that analyses the impact of generative AI on productivity. While we find substantial heterogeneity accross studies, our preferred estimate suggests that on average, across a wide range of sectors, study methods and productivity measures, the use of GenAI tools increases productivity by 16.7 %. We further find weak evidence that the size of the impact of GenAI tools is bigger for quantitative measures of productivity than for qualitative measures, and some evidence that experimental studies tend to show a higher association between GenAI use and productivity."
+format:
+  html:
+    toc: true
+acknowledgements: >
+  Acknowledgments: We would like to thank Tomas Havranek, Bob Reed and participants to Tomas Havranek's meta-analysis course at the University of Canterbury, Christchurch for comments.
+editor: visual
+bibliography: references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+{{< meta acknowledgements >}}
+
+## I. Introduction.
+
+Over the last two years, there has been an explosion of academic literature on the economic impact of Generative AI (GenAI). In this paper, we take stock of part of this literature by doing a meta-analysis of the results of 34 papers that focus on the impact of Gen AI on productivity.
+
+We focus on productivity in a work environment by selecting papers that investigate how the introduction of GenAI affects the quantity and quality of work done, when GenAI is applied to real-life tasks rather than academic tasks or assignments, and typically (but not always) by employees rather than by students.
+
+A meta-analysis of these studies allow us to identify the range of estimates available in the literature, judge the external validity of individual studies, as well as to compute a meta-analytic average of these estimates, reflecting the 'best' estimate based on the literature as a whole. Having such numbers is important when estimating or developing scenarios for the macro-economic impact of GenAI. @Acemoglu2024 for example multiplies the average of the estimates from only 2 studies (0.27, estimates from @noy2023 and @brynjolfsson2024) with the share of jobs exposed to GenAI (0.57) to estimate that "the average (overall) cost savings from AI are about 0.27 × 0.57 = 0.154".
+
+Based on more than 1000 estimates from 34, rather than 2, studies, and after controlling for publication bias, our preferred specification suggests an GenAI on average increases productivity by 16.7%. We further show substantial heterogeneity in reported estimates suggesting context matters a lot, with weak evidence suggesting quantitative measures of productivity (like time spent producing an item or number of items produced in a given amount of time) experiencing a bigger impact, measured in percentage change, than qualitative measures of productivity (like quality of work produced). There is also some evidence that experimental studies show higher partial correlations between GenAI use and productivity than quasi-experimental studies.
+
+Section II explains how we selected studies and section III discusses the characteristics of these studies. We then discuss different ways to aggregate the estimates (section IV), how we correct for publication bias (section V) and analyze how study characteristics affect estimates (section VI). Section VII to X repeat these steps for a different outcome measure, the partial correlation (Fisher Z) between GenAI use and productivity, rather than the estimated percentage change in productivity. Section XI concludes.
+
+## II. Finding studies that estimate the impact of GenAI on Productivity.
+
+To find relevant studies, we conducted a systematic search of literature on Gen AI and productivity using Scopus and Google Scholar.
+
+We started from the primary keywords "Gen AI" and "productivity", restricting the search to titles, abstracts, and keywords to ensure greater accuracy in both the initial and subsequent expanded searches.[^1]
+
+[^1]: The Boolean search query used in Scopus was “TITLE-ABS-KEY ("Gen\* AI") AND TITLE-ABS-KEY (productivity)”, where the asterisk functions as a wildcard to capture variations such as "gen" and "generative", or other synonyms beginning with “gen”.
+
+We selected Scopus as the initial database as the keyword analysis tool embedded in Scopus can automatically extract keywords from retrieved studies, enabling one to efficiently identify additional relevant keywords. We iteratively expanded the initial search query and continued searching until no new relevant keywords emerged. This led to an expanded search query --“TITLE-ABS-KEY ("Gen\* AI" OR “generative artificial intelligence” OR “large language model” OR “LLM” OR ChatGPT OR Copilot) AND TITLE-ABS-KEY (productivity OR performance OR quality OR quantity)”.
+
+We restricted the search to English-language literature and limited the publication years to 2023 and later, considering the widespread adoption of ChatGPT since 2023. As a result, we retrieved 687 studies on Scopus.
+
+We then conducted a Google Scholar search using the expanded query and retrieved the first 500 results sorted by relevance. We combined all retrieved studies and manually reviewed the titles and abstracts and skimmed the content of the retrieved studies. To be eligible, studies had to use empirical data or real-world experiments to demonstrate the actual impact of GenAI on productivity outcomes in workplace settings. We excluded studies that focused, for example, on GenAI's effect on perceived productivity of workers or course outcomes of students. As a result, searching with keywords helped us find 30 relevant studies.
+
+Finally, we checked the references of the selected studies to track additional eligible studies. This helped us identify 4 additional studies. In total, we retained 34 eligible studies.
+
+## III. Descriptive Statistics
+
+As a starting point, we classified, based on the abstract, each study as finding either a positive effect, a mixed effect or finding no effect. Based on the abstract, 23 studies suggest GenAI improves productivity, 10 find mixed effects, with GenAI increasing productivity for some tasks or skill-levels but decreasing for others, while one study found no effect (@butler2024). 12 studies include a measure of the percent change in productivity in their abstract, showing an average productivity improvement of 23.2%.
+
+Twenty-one papers included results about who benefited most from GenAI tools. 15 papers concluded that GenAI tools benefit those with lower skills/experience the most, 4 found who benefited most depended on the specific outcome measure, 1 found GenAI benefited high performers most (@otis2024) and 1 found it benefited all to a similar extent (@haslberger2024).
+
+It is further worth mentioning that 10 studies mentioned they used GenAi tools for their study. Besides for copy-editing, GenAI has been used for graphs (@dellacqua2024, @wiles2024 ), to classify observations into categories (@wiles2024, @brynjolfsson2024, @yeverechyahu2024) or grade content or performance (@wiles2024, @freeman2024, @haslberger2024). We have used, with mixed success, ChatGPT to extract estimates from tables, and search for and understand information about meta-analytic techniques and standard errors.
+
+```{r, include=FALSE}
+# This chunk creates the overall dataset from the excel file
+# Load required libraries
+library(readxl) ## For reading in Excel datasets
+library(dplyr)
+library(tidyverse)
+library(sandwich)      # For robust standard errors
+library(lmtest)        # For coeftest
+library(modelsummary)  # For nice tables
+library(metafor) ## Metafor needed to use the function the function rma()
+library(clubSandwich)## For clusterered standard errors
+library(estimatr)
+library(flextable)
+
+# Define the sheet names (1 to 39)
+sheet_names <- as.character(1:41)
+# some sheets are empty
+excluded_sheets <- c("10", "15", "25", "26","27", "32", "33")
+sheet_names <- setdiff(as.character(1:41), excluded_sheets)  # Keep only relevant sheets
+
+# Function to read and extract relevant columns
+read_extract_sheet <- function(sheet) {
+  # Read the sheet
+  df <- read_excel("GenAi Coding.xlsx", sheet = sheet, col_types = "text")
+  # Select columns by position 
+  df <- df %>% select(3,8,12, 13, 18, 19)
+  df <- df %>% mutate(SheetName = sheet)  
+  # Return the cleaned data frame
+  return(df)
+}
+
+# Read all sheets and remove NULLs (empty sheets)
+data_list <- lapply(sheet_names, read_extract_sheet)
+data_list <- Filter(Negate(is.null), data_list)  # Remove NULL elements
+
+# Combine all non-empty sheets
+combined_data <- bind_rows(data_list)
+combined_data <- combined_data %>% filter(!if_all(everything(), is.na))
+
+# give names to columns
+colnames(combined_data) <- c("Category","NrObs", "EffectSize", "SEEffectSize", "PercChange", "SEPercChange","ID")
+
+# get rid of empty rows
+combined_data <- combined_data %>% filter(!is.na(Category))
+
+# create a numerical variable that is 1 for quantity and 0 for quality
+combined_data <- combined_data %>%
+  mutate(Quantity = ifelse(Category == "Quantity", 1, 0))
+# drop the category variable
+combined_data <- combined_data %>% select(-Category)
+# make everything numeric
+combined_data <- combined_data %>%
+  mutate(across(everything(), as.numeric)) 
+# View the final dataset
+print(combined_data)
+
+# now add paper level variables
+df <- read_excel("GenAi Coding.xlsx", sheet = "Overview Clean", col_types = "text")
+df <- df %>%mutate(Paper = as.numeric(Paper))
+
+combined_data <- combined_data %>%
+  left_join(df %>% select(Paper, `AI Tool Category`), by = c("ID" = "Paper"))
+
+combined_data <- combined_data %>%
+  left_join(df %>% select(Paper, `Industry Category`), by = c("ID" = "Paper"))
+
+combined_data <- combined_data %>%
+  left_join(df %>% select(Paper, `Data Category`), by = c("ID" = "Paper"))
+
+combined_data <- combined_data %>%
+  left_join(df %>% select(Paper, `Students or not`), by = c("ID" = "Paper"))
+
+# create dummies for Experimental papers, Software papers and GPT papers
+combined_data <- combined_data %>%
+  mutate(Experiment = ifelse(`Data Category` == "Experiment", 1, 0))
+
+combined_data <- combined_data %>%
+  mutate(Software = ifelse(`Industry Category` == "Software", 1, 0))
+
+combined_data <- combined_data %>%
+  mutate(ChatGPT = ifelse(`AI Tool Category` %in% c("GPT -based", "GPT"), 1, 0))
+
+
+
+```
+
+```{r, include=FALSE}
+# we will have two seperate analysis, one for the z scores, one for the %
+# Creating the dataset for PercChange
+# note the code uses z as the name for perc change
+
+new_dataframe <- combined_data %>% select(Quantity, ChatGPT, Software, Experiment, NrObs, PercChange, SEPercChange, ID)
+new_dataframe <- new_dataframe %>% filter(!if_all(everything(), is.na))
+
+DT = as.data.frame(new_dataframe)
+DT <- DT %>% filter(!is.na(PercChange))
+summary(DT)
+#View(DT)
+
+DT$z=DT$PercChange
+DT$sez=DT$SEPercChange
+DT$obs <- seq(1, nrow(DT))
+#DT<-subset(DT, Quality==1)
+
+```
+
+```{r, include=FALSE}
+# summary stats by paper-level variable
+
+summary_stats <- DT %>%
+  summarise(mean_z = mean(z),
+            median_z = median(z),
+            sd_z = sd(z),
+            min_z = min(z),
+            max_z = max(z),
+            count = n())  # Number of unique IDs in each Experiment group
+
+
+summary_ID <- DT %>%group_by(ID)  %>% summarise(z_ID = median(z, na.rm = TRUE), count = n())%>% summarise(mean_z = mean(z_ID),median_z = median(z_ID),sd_z = sd(z_ID),min_z = min(z_ID),max_z = max(z_ID),count = n())
+
+
+summary_quantity <- DT %>%group_by(ID, Quantity)  %>% summarise(z_ID = median(z, na.rm = TRUE), count = n())%>%group_by(Quantity)%>% summarise(mean_z = mean(z_ID),median_z = median(z_ID),sd_z = sd(z_ID),min_z = min(z_ID),max_z = max(z_ID),count = n())
+
+
+summary_experiment <- DT %>%
+  group_by(ID) %>%
+  summarise(z_ID = median(z, na.rm = TRUE), 
+            Experiment = first(Experiment)) %>%  
+  group_by(Experiment) %>%
+  summarise(mean_z = mean(z_ID),
+            median_z = median(z_ID),
+            sd_z = sd(z_ID),
+            min_z = min(z_ID),
+            max_z = max(z_ID),
+            count = n())  # Number of unique IDs in each Experiment group
+
+
+summary_software <- DT %>%
+  group_by(ID) %>%
+  summarise(z_ID = median(z, na.rm = TRUE), 
+            Software = first(Software)) %>%  
+  group_by(Software) %>%
+  summarise(mean_z = mean(z_ID),
+            median_z = median(z_ID),
+            sd_z = sd(z_ID),
+            min_z = min(z_ID),
+            max_z = max(z_ID),
+            count = n())  # Number of unique IDs in each Experiment group
+
+
+summary_chatgpt<- DT %>%
+  group_by(ID) %>%
+  summarise(z_ID = median(z, na.rm = TRUE), 
+            ChatGPT = first(ChatGPT)) %>%  # Keep Experiment status for each ID
+  group_by(ChatGPT) %>%
+  summarise(mean_z = mean(z_ID),
+            median_z = median(z_ID),
+            sd_z = sd(z_ID),
+            min_z = min(z_ID),
+            max_z = max(z_ID),
+            count = n())  # Number of unique IDs in each Experiment group
+
+# Rename columns to distinguish groups
+colnames(summary_experiment)[1] <- "Group"
+colnames(summary_software)[1] <- "Group"
+colnames(summary_chatgpt)[1] <- "Group"
+colnames(summary_quantity)[1] <- "Group"
+
+summary_experiment$Group[1]<-'Quasi-Experimental'
+summary_experiment$Group[2]<-'Experimental'
+summary_software$Group[1]<-'Other Industries'
+summary_software$Group[2]<-'Software Industry'
+summary_chatgpt$Group[1]<-'Other GenAI Tools'
+summary_chatgpt$Group[2]<-'ChatGPT'
+summary_quantity$Group[1]<-'Quality'
+summary_quantity$Group[2]<-'Quantity'
+
+
+
+summary_stats$Type <- "Overall"
+summary_ID$Type <- "Overall, by study"
+summary_experiment$Type <- "Method"
+summary_software$Type <- "Industry"
+summary_chatgpt$Type <- "GenAI Tool"
+summary_quantity$Type <- "Productivity Measure"
+
+```
+
+```{r, echo=FALSE, include=FALSE}
+
+
+# Combine into one table
+summary_combined <- bind_rows(summary_stats, summary_ID, summary_experiment, summary_software, summary_chatgpt,summary_quantity)
+library(gt)
+
+table<-summary_combined %>%
+  mutate(Group = ifelse(Type == "Overall", "", Group), )%>%
+  mutate(Group = ifelse(Type == "Overall, by study", "", Group))%>%
+  select(Type, Group, count, median_z,everything()) %>%
+  gt() %>%
+  tab_header(title = "Table I - Summary Statistics by Group") %>%
+  fmt_percent(columns = c("mean_z", "median_z", "sd_z", "min_z", "max_z"), decimals = 1) %>%
+  cols_label(
+    Group = "",
+    Type = "",
+    count = "N",
+    mean_z = "Mean",
+    median_z = "Median",
+    sd_z = "SD",
+    min_z = "Min",
+    max_z = "Max"
+  ) %>%
+  tab_style(
+    style = cell_borders(sides = "top", weight = px(2)),  # Add a thick top border
+    locations = cells_body(rows = Type == "Overall" | Type != lag(Type, default = first(Type)))
+  )%>%
+  cols_align(align = "center", columns = c("count", "mean_z", "median_z", "sd_z", "min_z", "max_z"))%>%
+  tab_source_note(source_note = "Note: Estimates are measured as percentage changes in productivity")
+
+
+
+table |> gtsave("tab_1.png", quiet = TRUE)
+
+# below now insert picture through the visual mode!
+```
+
+![](tab_1.png)
+
+Table I further highlights the diversity across the (`r summary_combined$count[2]`) studies for which we have estimates in terms of percentage changes.
+
+For each of the identified studies, we coded, besides estimates and standard errors[^2], the following study-level characteristics.
+
+[^2]: Extracting estimates from papers is not always straightforward as some papers provide figures rather than tables, or in the case of interaction terms, it is unclear how to code the estimated effect as it depends on the values of other variables. We have an excel spreadsheet that explains for each paper what we included and did not include. In general, we do not code data from figures except if no other estimates are available for that study and the figures are sufficiently detailed to get reasonable guesses of the values.
+
+-   Is the study experimental or not? `r summary_combined$count[4]` studies randomly provided access to a GenAI tool to some subjects (for example, @peng2023 or @choi2023) but others (`r summary_combined$count[3]`studies) used quasi-experiments like the introduction of ChatGPT in only some countries (@quispe2024), the ban on ChatGPT in Italy (@kreitmeir2024), CoPilot only affecting software start-ups but not non-software related start-ups (@asam2024), CoPilot being introduced early to some programmers (@hoffmann2024) or the availability of CoPilot for Python but not for R (@yeverechyahu2024).
+
+-   What is the main sector in which the work takes place? The most frequent (`r summary_combined$count[6]` studies) task was coding (software industry), but other tasks included designing advertisements (@fu2024), product innovation (@dellacqua2025), blogging (@kaisen2024), office tasks (@freeman2024), customer support (@ni2024), writing short stories(@doshi2024), tutoring (@wang2025) and running a start-up (@otis2024).
+
+-   For what specific GenAI tool is the impact on productivity analysed. Most studies looked at the impact of ChatGPT(`r summary_combined$count[8]`, for example, @quispe2024 or @freeman2024), or CoPilot (for example, @hoffmann2024 or @butler2024), while few looked at company-specific GenAI tools (for example, @ni2024).
+
+Note there are many other dimensions in which these estimates differ. For example, some papers use control variables in a regression analysis, while other do not. Or some estimates were obtained using clustered standard errors, while others not. Given we have a a relatively small number of papers, our ability to figure out what characteristics cause estimates to be different is limited and hence one should be cautious when interpreting differences in estimate sizes across estimate or paper characteristics.
+
+Besides characteristics of the studies, we also looked at characteristics of the outcome variable used, and subdivided estimates into impacts on quantitative outcomes (`r summary_combined$count[10]` studies) like speed or number of items produced (for example, @gambacorta2024 counts the number of lines of code produced over a period of 6 weeks, or @asam2024 uses time-to-initial funding for start-ups) and impacts on qualitative measures (`r summary_combined$count[10]` studies, for example, @doshi2024 measures the creativity of stories produced with or without the help of GenAI, or @fu2024 measures the 'usefulness' of designs).
+
+The fact that different studies use different outcome measures makes it hard to compare estimates across studies. For example, how can one compare a study that finds GenAI increases the output by 5 lines of code per hour to a study that fins GenAI increases the creativity score by 1 on a scale from 0 to 10?
+
+To have a measure of the impact on productivity that is comparable across studies, we transformed, where possible, estimates to percentage changes, relative to the base category of productivity when no GenAI tool was available. Unfortunately, not all studies provide enough information to compute this measure.[^3]
+
+[^3]: 2 studies provide the mean outcome rather than the mean for the base category. Since those studies use the mean outcome to compute percentage changes, we do so too for those 2 studies. To compute the standard error of the percentage change, we multiply the percentage change by the ratio of the estimated standard error and the estimated effect size. This underestimates the true standard error (which would take into account the standard error of the base category mean). However, most studies don't report that standard error, and studies that do refer to percentage changes, typically implicitly assume that there is no such variation when discussing results. Our approach is thus consistent with what the typical study reports.
+
+We therefore also use a more standard approach in the meta-analysis literature by focusing on the correlation between the outcome and the treatment, through partial correlation coefficients or Fisher Z scores, which are derived from estimated t-statistics. So we will present two sets of estimates, the first one being the more intuitive measure (percent changes, table I), the second (Fisher Z scores, table VI below) being available for more estimates.
+
+Table I shows we have a total of `r summary_combined$count[1]` estimates from `r summary_combined$count[2]` studies, with a median estimate of `r paste0(formatC(summary_combined$median_z[1] * 100, format = "f", digits = 1), "%")` and a mean of `r paste0(formatC(summary_combined$mean_z[1] * 100, format = "f", digits = 1), "%")`. Aggregating estimates first by studies (so studies with more estimates do not get more weight) and then across studies (the 'overall, by study' statistics) shows similar results. It's also worth noting that standard deviation and the range of estimates is very big, reflecting the heterogeneity in outcomes across studies.
+
+Table I further suggests that experimental studies find somewhat higher productivity improvements than quasi-experimental studies, that studies set in the software industry or not focusing on ChatGPT find higher productivity improvements and finally, that quantitative outcomes show bigger impacts than qualitative outcomes. Of course, as mentioned above, one should be careful interpreting these differences as causal given the correlation between these and other, omitted, characteristics.
+
+## IV. Weighing Estimates to Get an Overall Estimate.
+
+So far we focused on the heterogeneity in the estimates. But how can we now best aggregate these results to get one number that summarizes the findings of the literature? There are multiple ways one can aggregate estimates across studies. Table I provided statistics that weighed all estimates equally (the 'overall' statistics) or weighed estimates so all studies had the same weight, independent of how many estimates came from a given study (the 'overall, by study' statistics). However, one could argue that a more efficient estimate can be obtained if more precisely estimated estimates would be given a higher weight. In the meta-analysis literature, several ways to weigh estimates have been proposed. In table II below, we provide, in addition to the OLS estimate (which corresponds to the mean estimate of Table I), a fixed effect estimate, a random effect estimate and two 3-level estimates.
+
+The OLS model assumes that the estimate i (out of N) comes from a distribution with mean $\beta_0$ and variance $\sigma^2$.
+
+$$ Estimate_i = \beta_0 + \epsilon_i, \quad \epsilon_i \sim N(0, \sigma^2), \quad i = 1, \dots, N $$
+
+All estimates are thus assumed to come from the same distribution, and the only reason why estimates differ is because of sampling error.
+
+The fixed effects model maintains the assumption of one single true effect but relaxes the assumption of homoscedasticity and gives higher weight to more precise estimates (that is, weighted least squares).
+
+$$ Estimate_i = \beta_0 + \epsilon_i, \quad \epsilon_i \sim N(0, se(Estimate_i)^2), \quad i = 1, \dots, S $$
+
+The random effect allows for an additional normally distributed random effect with mean $\theta_i$ and variance $\tau^2$.
+
+$$
+Estimate_i = \beta_0 + \theta_i + \epsilon_i, \quad \theta_i \sim N(0, \tau^2), \quad \epsilon_i \sim N(0, se(Estimate_i)^2), \quad i = 1, \dots, S
+$$
+
+In other words, there is unique true effect for each estimate which consists of the common effect $\beta_0$ and a draw from a common normal distribution.
+
+The three level, hierarchical effects meta-analysis, further modifies this equation to recognize that estimates from the same study are likely to have a common effect.
+
+$$
+Estimate_{ij} = \beta_0 + \phi_{ij} + \theta_{i} + \epsilon_{ij}, \quad
+\theta_j \sim N(0, \tau^2), \quad
+\phi_{ij} \sim N(0, \upsilon^2), \quad
+\epsilon_{ij} \sim N(0, se(Estimate_{ij})^2), \quad
+i = 1, \dots, S, \quad j = 1, \dots, G
+$$
+
+So in addition to the common effect $\beta_0$ and the random estimate level effect $\theta_i$, there is also a study level effect, $\phi_{ij}$ .
+
+Finally, he 3L-VCV model, also known as the correlated and hierarchical effects meta-analysis further allows sampling errors to be correlated at the study level. The later correlation is not estimated, however, instead it needs to be imposed. We chose a value of 0.15 as this minimized the Akaike Information Criterion (AIC) and hence fitted the data well.
+
+```{r, include=FALSE}
+# different weightings
+######################################
+#########              ###############
+######### table1 - OLS ###############
+#########              ###############
+######################################
+
+table1.1 = lm(z~1,data=DT)
+coef_test(table1.1, cluster=DT$ID, vcov = "CR2") 
+
+AIC(table1.1)
+BIC(table1.1)
+
+###############################################
+#########                       ###############
+######### table1 - Fixed Effect ###############
+#########                       ###############
+###############################################
+
+table1.2  <- rma.mv(yi = z, 
+                 V = sez^2, 
+                 data = DT, 
+                 method ="FE")
+table1.2
+
+coef_test(table1.2, cluster=DT$ID, vcov = "CR2")
+
+
+
+
+
+#################################################
+#########                         ###############
+######### table1 - Random Effects ###############
+#########                         ###############
+#################################################
+
+table1.3 <- rma.mv(z ~ 1,
+                   V = sez^2,
+                   random = ~ 1 | obs,
+                   data = DT)
+table1.3
+
+
+coef_test(table1.3, cluster=DT$ID, vcov = "CR2") 
+
+
+
+# i2 and tau2 -doesnt work with multivariat
+# but univariate gives same results but has these
+
+table1.3a <- rma(z ~ 1,
+                   vi = sez^2,
+                   random = ~ 1 | obs,
+                   data = DT)
+table1.3a$tau2
+REI2<-table1.3a$I2
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table1.2, table1.3)
+
+
+###################################
+#########           ###############
+######### table1 3L ###############
+#########           ###############
+###################################
+
+table1.4 <- rma.mv(z ~ 1,
+                   V = sez^2,
+                   random = ~ 1 | ID/obs,
+                   data = DT)
+table1.4 
+coef_test(table1.4, cluster=DT$ID, vcov = "CR2")
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table1.3, table1.4)
+
+
+
+#######################################
+#########               ###############
+######### table1 3L-VCV ###############
+#########               ###############
+#######################################
+
+## CHE - rho = 0.15
+# note when trying 0.15 seemed to give lowest AIC/BIC
+V_list <- impute_covariance_matrix(vi = (DT$sez)^2, 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table1.5 <- rma.mv(yi=z, 
+                     V = V_list, 
+                     random = ~1 | ID/obs, 
+                     data=DT, 
+                     method="REML")
+
+table1.5
+
+coef_test(table1.5, cluster=DT$ID, vcov = "CR2") 
+
+
+
+### Compute AIC and BIC
+AIC(table1.5)
+BIC(table1.5)
+
+# preparation for table
+# the vcov_fe etc only works for vcov_ols, the rest doesnt work
+# so the solution is just to copy the clustered se and p values to the tables
+
+a<-coef_test(table1.2, cluster=DT$ID, vcov = "CR2")
+table1.2$se=a$SE
+table1.2$pval=a$p_Satt
+
+a<-coef_test(table1.3, cluster=DT$ID, vcov = "CR2")
+table1.3$se=a$SE
+table1.3$pval=a$p_Satt
+
+a<-coef_test(table1.4, cluster=DT$ID, vcov = "CR2")
+table1.4$se=a$SE
+table1.4$pval=a$p_Satt
+
+a<-coef_test(table1.5, cluster=DT$ID, vcov = "CR2")
+table1.5$se=a$SE
+table1.5$pval=a$p_Satt
+
+
+
+
+
+vcov_ols <- vcovCR(table1.1, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table1.2, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table1.3, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table1.4, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table1.5, cluster = DT$ID, type = "CR2")
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table1.1, "Fixed Effects" = table1.2, "Random Effects" = table1.3, "3L Effects" = table1.4, "3L-VCV Effects" = table1.5)
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+```
+
+```{r, echo=FALSE}
+
+# Convert to list format for modelsummary
+library(flextable)
+
+# we exclude all stats except Nr Obs and AIC
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+table<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,             # Use robust SEs
+             gof_map = gm,coef_rename = c("(Intercept)" = "overall"), output = "flextable")    
+
+# Add title above the table
+table <- flextable::add_header_lines(table, values = "Table II - Averaging Estimates using Various Weights")
+
+table <- flextable::add_footer_lines(table, values = "Notes: The estimated 'overall' effect is the result of a regression of the estimate of the impact of GenAI on productivity, measured as percentage changes in productivity, on a constant. The different models make different assumptions about the error terms as described in the text.")
+
+
+# Make table fit to window
+table <- flextable::autofit(table)
+table%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+
+# Save table to Word
+flextable::save_as_docx(table, path = "table.docx")
+
+
+```
+
+Table II shows that if we assume all estimates come from the same distribution, the best estimate is an extremely small impact. However, assuming estimates come from the same distribution implies one will give lots of weight to the most precise studies and hence, a handful of studies can have a huge impact on the estimate. Given the diversity of the papers in the sample, the fixed effect assumption is further unlikely to hold and the random effects estimator makes more sense.[^4] The random effect is closer to the OLS estimate and suggests a `r paste0(formatC(table1.3$beta[1] * 100, format = "f", digits = 1), "%")` improvement in productivity associated with GenAI. The random effects estimator assumes all estimates are independent, but since many estimates come from the same study, the 3 level estimators, which allow for correlations between groups of estimates, are more realistic. Based on the minimum AIC criterion, our preferred estimate of the overall average comes from the 3-level VCV model which shows using GenAI increases productivity by `r paste0(formatC(table1.5$beta[1] * 100, format = "f", digits = 1), "%")`.
+
+[^4]: the I2 statistic equals `r paste0(formatC(REI2, format = "f", digits = 3))` which measures the importance of the random effects suggest almost all of the variance comes from the variance of the random effect ($\tau^2$) rather than sampling variance.
+
+## V. Correcting for Publication Bias
+
+So far, we assumed that there was no publication bias: that is, researchers are as likely to publish significant and insignificant results. However, in reality researchers might be less likely to show insignificant results as they know there is a disproportionate interest for significant results.
+
+The standard way to check for publication bias is the funnel plot. In the absence of publication bias, there should not be a relationship between the estimate and its standard error. The funnel plot in figure 1 plots the preciseness of the estimate against the estimated effect size.
+
+```{r, echo=FALSE}
+
+funnel(table1.2)
+title(main = "Figure I: Funnel Plot of Effect Sizes", col.main = "blue", font.main = 2)
+```
+
+If there is no publication bias one should see most estimates in the funnel. In our case, we see more estimates at the right side of the funnel than at the left-side, suggesting there could be publication bias.
+
+```{r, include=FALSE}
+# CORRECTING FOR PUBLCIATION BIAS WITHOUT CONTROL VARIABLES
+
+######################################
+#########              ###############
+######### table2 - OLS ###############
+#########              ###############
+######################################
+
+table2.1 = lm_robust(z~sez,data=DT,clusters=ID)
+summary(table2.1)
+
+
+### Fit OLS using lm() to be able to compute AIC and BIC
+table2.1_lm = lm(z ~ sez, data = DT)
+AIC(table2.1_lm)
+BIC(table2.1_lm)
+
+###############################################
+#########                       ###############
+######### table2 - Fixed Effect ###############
+#########                       ###############
+###############################################
+
+table2.2  <- rma.mv(z ~ 1+sez, 
+                    V = sez^2, 
+                    data = DT, 
+                    method ="FE")
+table2.2
+coef_test(table2.2, cluster=DT$ID, vcov = "CR2") 
+
+
+#################################################
+#########                         ###############
+######### table2 - Random Effects ###############
+#########                         ###############
+#################################################
+
+table2.3 <- rma.mv(z ~ 1+sez,
+                   V = sez^2,
+                   random = ~ 1 | obs,
+                   method="REML",
+                   data = DT)
+
+table2.3
+coef_test(table2.3, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table2.2, table2.3)
+
+###################################
+#########           ###############
+######### table2 3L ###############
+#########           ###############
+###################################
+
+table2.4 <- rma.mv(z ~ 1+sez,
+                   V = sez^2,
+                   random = ~ 1 | ID/obs,
+                   data = DT)
+table2.4
+coef_test(table2.4, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table2.3, table2.4)
+
+#######################################
+#########               ###############
+######### table1 3L-VCV ###############
+#########               ###############
+#######################################
+
+## CHE - rho = 0.15
+V_list <- impute_covariance_matrix(vi = (DT$sez^2), 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table2.5 <- rma.mv(z ~ 1+sez,
+                   V = V_list, 
+                   random = ~1 | ID/obs, 
+                   data=DT, 
+                   method="REML")
+
+table2.5
+coef_test(table2.5, cluster=DT$ID, vcov = "CR2") 
+
+
+
+### Compute AIC and BIC
+AIC(table2.5)
+BIC(table2.5)
+
+
+# modelsummary doesnt allow to change the vcov for rma so we have to do it manually
+
+a<-coef_test(table2.2, cluster=DT$ID, vcov = "CR2")
+table2.2$se=a$SE
+table2.2$pval=a$p_Satt
+
+a<-coef_test(table2.3, cluster=DT$ID, vcov = "CR2")
+table2.3$se=a$SE
+table2.3$pval=a$p_Satt
+
+a<-coef_test(table2.4, cluster=DT$ID, vcov = "CR2")
+table2.4$se=a$SE
+table2.4$pval=a$p_Satt
+
+a<-coef_test(table2.5, cluster=DT$ID, vcov = "CR2")
+table2.5$se=a$SE
+table2.5$pval=a$p_Satt
+
+
+
+vcov_ols <- vcovCR(table2.1_lm, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table2.2, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table2.3, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table2.4, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table2.5, cluster = DT$ID, type = "CR2")
+
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table2.1_lm, "Fixed Effects" = table2.2, "Random Effects" = table2.3, "3L Effects" = table2.4, "3L-VCV Effects" = table2.5)
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+
+
+```
+
+```{r, echo=FALSE}
+
+
+# Convert to list format for modelsummary
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+
+table2<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,             # Use robust SEs
+             gof_map = gm,  coef_rename = c("(Intercept)" = "intercept", "sez" = "St. Error"), output = "flextable")    
+
+
+# Add title above the table
+table2 <- flextable::add_header_lines(table2, values = "Table III  - Publication Bias - FAT-PET")
+
+table2 <- flextable::add_footer_lines(table2, values = "Notes: The estimated 'overall' effect is the result of a regression of the estimate of the impact of GenAI on productivity, measured as percentage changes in productivity, on a constant and the standard error of the estimate, to control for publication bias. The different models make different assumptions about the error terms as described in the text.")
+
+
+
+# Make table fit to window
+table2 <- flextable::autofit(table2)
+table2%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+# Save table to Word
+flextable::save_as_docx(table2, path = "table2.docx")
+
+
+```
+
+To incorporate publication bias in the weighting models described above, we include the standard error of estimates in the regression models (the so-called FAT-PET-test). This variable will allow to control for the possible link between the standard error and the estimated effect size. In this regression, the intercept then becomes the estimated effect size in case of zero publication bias.
+
+Table III shows some mixed results in terms of publication bias: while all coefficients are positive, suggesting more precise estimates (which have smaller standard errors) tend to show smaller effect sizes, the estimates are not always statistically significant. Once we control for the potential bias, the estimate of the overall effect become somewhat smaller, from `r paste0(formatC(table1.5$beta[1] * 100, format = "f", digits = 1), "%")` for the 3 level VCV estimate which assumes no publication bias, to `r paste0(formatC(table2.5$beta[1] * 100, format = "f", digits = 1), "%")` once publication bias is taken into account.
+
+## VI. PEESE Analysis
+
+The traditional next step after finding that the overall effect is different from zero, is to do a regression including the square of the standard error as a control rather than the standard error itself, the idea being that theoretically publication bias should be non-linearly related to the estimated effect size. This is the so-called PEESE test.
+
+```{r, include=FALSE}
+
+DT$sezsq<-DT$sez^2
+
+
+# CORRECTING FOR PUBLCIATION BIAS WITHOUT CONTROL VARIABLES
+
+######################################
+#########              ###############
+######### table2p - OLS ###############
+#########              ###############
+######################################
+
+table2.1p = lm_robust(z~sezsq,data=DT,clusters=ID)
+summary(table2.1)
+
+
+### Fit OLS using lm() to be able to compute AIC and BIC
+table2.1_lmp = lm(z ~ sezsq, data = DT)
+AIC(table2.1_lmp)
+BIC(table2.1_lmp)
+
+###############################################
+#########                       ###############
+######### table2 - Fixed Effect ###############
+#########                       ###############
+###############################################
+
+table2.2p  <- rma.mv(z ~ 1+sezsq, 
+                    V = sez^2, 
+                    data = DT, 
+                    method ="FE")
+coef_test(table2.2p, cluster=DT$ID, vcov = "CR2")
+
+
+
+#################################################
+#########                         ###############
+######### table2 - Random Effects ###############
+#########                         ###############
+#################################################
+
+table2.3p <- rma.mv(z ~ 1+sezsq,
+                   V = sez^2,
+                   random = ~ 1 | obs,
+                   method="REML",
+                   data = DT)
+coef_test(table2.3p, cluster=DT$ID, vcov = "CR2")
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table2.2p, table2.3p)
+
+###################################
+#########           ###############
+######### table2 3L ###############
+#########           ###############
+###################################
+
+table2.4p <- rma.mv(z ~ 1+sezsq,
+                   V = sez^2,
+                   random = ~ 1 | ID/obs,
+                   data = DT)
+table2.4p
+
+coef_test(table2.4p, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table2.3p, table2.4p)
+
+#######################################
+#########               ###############
+######### table1 3L-VCV ###############
+#########               ###############
+#######################################
+
+## CHE - rho = 0.15
+V_list <- impute_covariance_matrix(vi = (DT$sez^2), 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table2.5p <- rma.mv(z ~ 1+sezsq,
+                   V = V_list, 
+                   random = ~1 | ID/obs, 
+                   data=DT, 
+                   method="REML")
+coef_test(table2.5p, cluster=DT$ID, vcov = "CR2") 
+
+
+
+### Compute AIC and BIC
+AIC(table2.5p)
+BIC(table2.5p)
+
+
+
+# we now put the robust se in the table so we can later use it with modelsummary
+a<-coef_test(table2.2p, cluster=DT$ID, vcov = "CR2") 
+table2.2p$se=a$SE
+table2.2p$pval=a$p_Satt
+
+a<-coef_test(table2.3p, cluster=DT$ID, vcov = "CR2") 
+table2.3p$se=a$SE
+table2.3p$pval=a$p_Satt
+
+
+a<-coef_test(table2.4p, cluster=DT$ID, vcov = "CR2") 
+table2.4p$se=a$SE
+table2.4p$pval=a$p_Satt
+
+a<-coef_test(table2.5p, cluster=DT$ID, vcov = "CR2") 
+table2.5p$se=a$SE
+table2.5p$pval=a$p_Satt
+
+
+vcov_ols <- vcovCR(table2.1_lmp, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table2.2p, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table2.3p, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table2.4p, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table2.5p, cluster = DT$ID, type = "CR2")
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table2.1_lmp, "Fixed Effects" = table2.2p, "Random Effects" = table2.3p, "3L Effects" = table2.4p, "3L-VCV Effects" = table2.5p)
+# model summary doesnt really use the vcov list for rma objects so that's 
+# why we changed value in the tables themselves
+# for ols it takes the robust ones, but for the rest i takes the values we
+#put there from the robust specification
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+
+
+```
+
+```{r, echo=FALSE}
+
+
+# Convert to list format for modelsummary
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+table2p<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,             # Use robust SEs
+             gof_map = gm,  coef_rename = c("(Intercept)" = "intercept", "sezsq" = "St. Error^2"), output = "flextable")    
+
+
+# Add title above the table
+table2p <- flextable::add_header_lines(table2p, values = "Table IV - Publication Bias - PEESE")
+
+table2p <- flextable::add_footer_lines(table2p, values = "Notes: The estimated 'overall' effect is the result of a regression of the estimate of the impact of GenAI on productivity, measured as percentage changes in productivity, on a constant and the square of the standard error of the estimate, to control for publication bias. The different models make different assumptions about the error terms as described in the text.")
+
+
+
+# Make table fit to window
+table2p <- flextable::autofit(table2p)
+table2p%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+# Save table to Word
+flextable::save_as_docx(table2p, path = "table2p.docx")
+
+
+```
+
+Interestingly, the PEESE results in table IV suggest there is no significant non-linear publication bias, and hence bring our preferred 3-level VCV estimates back up to a `r paste0(formatC(table2.5p$beta[1] * 100, format = "f", digits = 1), "%")` increase in productivity.
+
+## VII. Heterogeneity Analysis
+
+To further try to explain why estimates are different we next include 4 dummies, 3 reflecting differences between studies, whether the study was experimental or not, whether the study was focusing on the Software Industry or not and whether ChatGPT was the GenAI tool or not, and one regression-level variable, whether the outcome was a measure of quantity or not.
+
+```{r, include=FALSE}
+# correcting for Bias and using control variables
+
+
+DT$sezsq<-DT$sez^2
+
+#######################################
+#########               ###############
+######### table2 - OLSa ###############
+#########               ###############
+#######################################
+
+table2.1a = lm_robust(z~sezsq+Quantity + Software + Experiment+ChatGPT,data=DT,clusters=ID)
+summary(table2.1a)
+
+## This is to get the predicted value of z when sez = 0 and all the other variables are 
+## evaluated at their means.
+
+newmods <- data.frame(sezsq = 0, 
+  Quantity = mean(DT$Quantity), 
+  Experiment = mean(DT$Experiment),
+  Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.1a, newdata = newmods, se.fit=TRUE)
+
+### Fit OLS using lm() to be able to compute AIC and BIC
+table2.1a_lm = lm(z ~ sezsq+Quantity+ Software + Experiment+ChatGPT, data = DT)
+AIC(table2.1a_lm)
+BIC(table2.1a_lm)
+
+################################################
+#########                        ###############
+######### table2 - Fixed Effecta ###############
+#########                        ###############
+###############################################
+
+table2.2a  <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT, 
+                     V = sez^2, 
+                     data = DT, 
+                     method ="FE")
+coef_test(table2.2a, cluster=DT$ID, vcov = "CR2")
+
+## To get the predicted constant term when sez=0, I have to use
+## CR1 standard errors
+
+table2.2aa = robust(table2.2a, DT$ID, clubSandwich=TRUE)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.2aa, newmods = newmods, addx = TRUE)
+
+
+
+
+##################################################
+#########                          ###############
+######### table2 - Random Effectsa ###############
+#########                          ###############
+##################################################
+
+table2.3a <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT,
+                    V = sez^2,
+                    random = ~ 1 | obs,
+                    method="REML",
+                    data = DT)
+coef_test(table2.3a, cluster=DT$ID, vcov = "CR2") 
+
+## To get the predicted constant term when sez=0, I have to use
+## CR1 standard errors
+
+table2.3aa = robust(table2.3a, DT$ID, clubSandwich=TRUE)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.3aa, newmods = newmods, addx = TRUE)
+
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table2.2a, table2.3a)
+
+
+
+
+####################################
+#########            ###############
+######### table2 3La ###############
+#########            ###############
+####################################
+
+table2.4a <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT,
+                    V = sez^2,
+                    random = ~ 1 | ID/obs,
+                    data = DT)
+coef_test(table2.4a, cluster=DT$ID, vcov = "CR2") 
+
+## To get the predicted constant term when sez=0, I have to use
+## CR1 standard errors
+
+table2.4aa = robust(table2.4a, DT$ID, clubSandwich=TRUE)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.4aa, newmods = newmods, addx = TRUE)
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table2.3a, table2.4a)
+
+########################################
+#########                ###############
+######### table1 3L-VCVa ###############
+#########                ###############
+########################################
+
+## CHE - rho = 0.15
+V_list <- impute_covariance_matrix(vi = (DT$sez^2), 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table2.5a <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT,
+                    V = V_list, 
+                    random = ~1 | ID/obs, 
+                    data=DT, 
+                    method="REML")
+coef_test(table2.5a, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC
+AIC(table2.5a)
+BIC(table2.5a)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+predict(table2.5aa, newmods = newmods, addx = TRUE)
+
+# for quantity
+
+newmods <- c(sezsq = 0, 
+                      Quantity = 1, 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+bestpracticequantity<-predict(table2.5aa, newmods = newmods, addx = TRUE)
+# for quality
+
+newmods <- c(sezsq = 0, 
+                      Quantity = 0, 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+bestpracticequality<-predict(table2.5aa, newmods = newmods, addx = TRUE)
+
+
+# now for Chatgpt
+
+newmods <- c(sezsq = 0, 
+                      Quantity =  mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = 1)
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+bestpracticechatgpt<-predict(table2.5aa, newmods = newmods, addx = TRUE)
+# for quality
+
+newmods <- c(sezsq = 0, 
+                      Quantity =  mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = 0)
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+bestpracticenochatgpt<-predict(table2.5aa, newmods = newmods, addx = TRUE)
+
+
+
+
+# Regression of sez on all other explanatory variables
+#check = lm(sez~Quantity+ Software + Experiment+ChatGPT,data=DT)
+#summary(check)
+
+# for table
+
+a<-coef_test(table2.2a, cluster=DT$ID, vcov = "CR2")
+table2.2a$se=a$SE
+table2.2a$pval=a$p_Satt
+
+
+
+a<-coef_test(table2.3a, cluster=DT$ID, vcov = "CR2")
+table2.3a$se=a$SE
+table2.3a$pval=a$p_Satt
+
+
+a<-coef_test(table2.4a, cluster=DT$ID, vcov = "CR2")
+table2.4a$se=a$SE
+table2.4a$pval=a$p_Satt
+
+a<-coef_test(table2.5a, cluster=DT$ID, vcov = "CR2")
+table2.5a$se=a$SE
+table2.5a$pval=a$p_Satt
+
+
+
+
+
+vcov_ols <- vcovCR(table2.1a_lm, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table2.2a, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table2.3a, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table2.4a, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table2.5a, cluster = DT$ID, type = "CR2")
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table2.1a_lm, "Fixed Effects" = table2.2a, "Random Effects" = table2.3a, "3L Effects" = table2.4a, "3L-VCV Effects" = table2.5a)
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+
+
+```
+
+```{r, echo=FALSE}
+
+# Convert to list format for modelsummary
+
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+
+table3<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,  coef_rename = c("(Intercept)" = "intercept", "sezsq" = "St. Error^2"), 
+             gof_map = gm, output = "flextable")    
+
+# Add title above the table
+table3 <- flextable::add_header_lines(table3, values = "Table V - Heterogeneity Analysis")
+
+table3 <- flextable::add_footer_lines(table3, values = "Notes: The estimated 'overall' effect is the result of a regression of the estimate of the impact of GenAI on productivity, measured as percentage changes in productivity, on a constant, the square of the standard error of the estimate (to capture publication bias) and several study characteristics. The different models make different assumptions about the error terms as described in the text. ")
+
+
+# Make table fit to window
+table3 <- flextable::autofit(table3)
+table3%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+# Save table to Word
+flextable::save_as_docx(table3, path = "table3.docx")
+
+
+```
+
+Table V shows it's hard to conclude much about what drives heterogeneity as all estimated coefficients are insignificant. That being said, in terms of size of the estimated effects, the impact on quantity seems substantially bigger (about `r paste0(formatC(table2.5a$beta[3,1] * 100, format = "f", digits = 1)," percentage points")`) than the impact on quality. If we set the other characteristics at their mean value and the standard error squared at 0 (a so-called best practice regression), the average for qualitative studies is relatively small (`r paste0(formatC(bestpracticequality$pred * 100, format = "f", digits = 1), "%")`) and insignificant (se=(`r paste0(formatC(bestpracticequality$se * 100, format = "f", digits = 1), "%")`) ), while the average for quantitative studies is sizeable at `r paste0(formatC(bestpracticequantity$pred * 100, format = "f", digits = 1), "%")` and significant (se=(`r paste0(formatC(bestpracticequantity$se * 100, format = "f", digits = 1), "%")`)).
+
+Similarly, relative to other GenAI tools, the impact of ChatGPT seems smaller ((about `r paste0(formatC(table2.5a$beta[6,1] * 100, format = "f", digits = 1), " percentage points")`)) than the impact of other GenAI tools. If we set the other characteristics at their mean value and the standard error squared at 0, the average for ChatGPT is small (`r paste0(formatC(bestpracticechatgpt$pred * 100, format = "f", digits = 1), "%")`, se=(`r paste0(formatC(bestpracticechatgpt$se * 100, format = "f", digits = 1), "%")`) ), while the average for other GenAI tools is more sizeable at `r paste0(formatC(bestpracticenochatgpt$pred * 100, format = "f", digits = 1), "%")` (se=(`r paste0(formatC(bestpracticenochatgpt$se * 100, format = "f", digits = 1), "%")`)).
+
+Finally, the estimated size of the impact of industry or method is relatively small.
+
+Of course, one should be careful in interpreting these differences, not only because we find they are statistically insignificant, but also because omitted variables could be correlated both with the effect size and the included characteristics.
+
+## VIII: Using Fisher Z measures rather than % changes
+
+In the above analysis, we used estimated percentage changes as variable of interest. Not all studies provide estimates that can be transformed into percentage changes in productivity, for example because the outcomes measures used are standardized values. Similarly, not all studies provide the mean level of outcome without AI, for all of the regressions used in the study.
+
+As an alternative, we therefore repeat the above regression using Fisher Z measures. Fisher Z is a transformation of the partial correlation coefficient r, the latter being a function of the t statistic and the degrees of freedom.
+
+$$
+r_i = \frac{t_i}{\sqrt{t_i^2 + (df_i)}}
+$$
+
+$$
+Z_I = \frac{1}{2} \ln \left( \frac{1+r_i}{1-r_i} \right)
+$$
+
+The Fisher Z statistics can be categorized as “small”, “medium” and “large” effects based on cut-off values from @XueReedVanAert2023.
+
+```{r, include=FALSE}
+# we will have two seperate analysis, one for the z scores, one for the %
+# Creating the dataset for z scores
+
+new_dataframe <- combined_data %>% select(Quantity, ChatGPT, Software, Experiment, NrObs, EffectSize, SEEffectSize, ID)
+new_dataframe <- new_dataframe %>% filter(!if_all(everything(), is.na))
+
+DT = as.data.frame(new_dataframe)
+DT <- DT %>% filter(!is.na(EffectSize))
+summary(DT)
+
+DT$t=DT$EffectSize/DT$SEEffectSize
+DT$pcc=DT$t/sqrt(DT$t**2+DT$NrObs)
+
+# ### Converting PCC to Fisher's z and se(Fisher's z)
+DT$z = with(DT, 0.5*log((1+pcc)/(1-pcc)))
+DT$sez = with(DT, 1/sqrt(NrObs-3))
+DT$obs <- seq(1, nrow(DT))
+
+```
+
+```{r, include=FALSE}
+# summary stats by paper-level variable
+
+summary_stats <- DT %>%
+  summarise(mean_z = mean(z),
+            median_z = median(z),
+            sd_z = sd(z),
+            min_z = min(z),
+            max_z = max(z),
+            count = n())  # Number of unique IDs in each Experiment group
+
+summary_ID <- DT %>%group_by(ID)  %>% summarise(z_ID = median(z, na.rm = TRUE), count = n())%>% summarise(mean_z = mean(z_ID),median_z = median(z_ID),sd_z = sd(z_ID),min_z = min(z_ID),max_z = max(z_ID),count = n())
+
+
+summary_quantity <- DT %>%group_by(ID, Quantity)  %>% summarise(z_ID = median(z, na.rm = TRUE), count = n())%>%group_by(Quantity)%>% summarise(mean_z = mean(z_ID),median_z = median(z_ID),sd_z = sd(z_ID),min_z = min(z_ID),max_z = max(z_ID),count = n())
+
+
+summary_experiment <- DT %>%
+  group_by(ID) %>%
+  summarise(z_ID = median(z, na.rm = TRUE), 
+            Experiment = first(Experiment)) %>%  
+  group_by(Experiment) %>%
+  summarise(mean_z = mean(z_ID),
+            median_z = median(z_ID),
+            sd_z = sd(z_ID),
+            min_z = min(z_ID),
+            max_z = max(z_ID),
+            count = n())  # Number of unique IDs in each Experiment group
+
+
+summary_software <- DT %>%
+  group_by(ID) %>%
+  summarise(z_ID = median(z, na.rm = TRUE), 
+            Software = first(Software)) %>%  
+  group_by(Software) %>%
+  summarise(mean_z = mean(z_ID),
+            median_z = median(z_ID),
+            sd_z = sd(z_ID),
+            min_z = min(z_ID),
+            max_z = max(z_ID),
+            count = n())  # Number of unique IDs in each Experiment group
+
+
+summary_chatgpt<- DT %>%
+  group_by(ID) %>%
+  summarise(z_ID = median(z, na.rm = TRUE), 
+            ChatGPT = first(ChatGPT)) %>%  # Keep Experiment status for each ID
+  group_by(ChatGPT) %>%
+  summarise(mean_z = mean(z_ID),
+            median_z = median(z_ID),
+            sd_z = sd(z_ID),
+            min_z = min(z_ID),
+            max_z = max(z_ID),
+            count = n())  # Number of unique IDs in each Experiment group
+
+# Rename columns to distinguish groups
+colnames(summary_experiment)[1] <- "Group"
+colnames(summary_software)[1] <- "Group"
+colnames(summary_chatgpt)[1] <- "Group"
+colnames(summary_quantity)[1] <- "Group"
+
+summary_experiment$Group[1]<-'Quasi-Experimental'
+summary_experiment$Group[2]<-'Experimental'
+summary_software$Group[1]<-'Other Industries'
+summary_software$Group[2]<-'Software Industry'
+summary_chatgpt$Group[1]<-'Other GenAI Tools'
+summary_chatgpt$Group[2]<-'ChatGPT'
+summary_quantity$Group[1]<-'Quality'
+summary_quantity$Group[2]<-'Quantity'
+
+
+
+summary_stats$Type <- "Overall"
+summary_ID$Type <- "Overall, by Study"
+summary_experiment$Type <- "Method"
+summary_software$Type <- "Industry"
+summary_chatgpt$Type <- "GenAI Tool"
+summary_quantity$Type <- "Productivity Measure"
+
+```
+
+```{r, echo=FALSE}
+
+
+# Combine into one table
+summary_combined <- bind_rows(summary_stats, summary_ID, summary_experiment, summary_software, summary_chatgpt, summary_quantity)
+library(gt)
+
+table<-summary_combined %>%
+  select(Type, Group, count, median_z,everything()) %>%
+  gt() %>%
+  tab_header(title = "Table VI - Summary Statistics by Group") %>%
+  fmt_number(columns = c("mean_z", "median_z", "sd_z", "min_z", "max_z"), decimals = 3) %>%
+  cols_label(Group = "Group", Type = "Type", count = "N") %>%
+  tab_style(
+    style = cell_borders(sides = "top", weight = px(2)),  # Add a thick top border
+    locations = cells_body(rows = Type == "Overall" | Type != lag(Type, default = first(Type)))
+  )%>%
+  tab_source_note(source_note = "Note: Estimates are measured as Fisher Z scores")
+
+table |> gtsave("tab_2.png", quiet = TRUE)
+
+# below now insert picture through the visual mode!
+
+
+```
+
+![](tab_2.png)
+
+Table V shows descriptive stats, like table I: we now have about 50% more estimates, about 1500 estimates compared to about 1000 in table I. The median Fisher Z value is about `r formatC(summary_combined$median_z[1], format = "f", digits = 3)` and the mean about `r formatC(summary_combined$mean_z[1], format = "f", digits = 3)`. Different studies have different number of estimates so in the overall average, the studies with more estimates get higher weight. If we give each study the same weight, by taking the median estimate within each study and then computing descriptive statistics, we get a median Fisher Z score of `r formatC(summary_combined$median_z[2], format = "f", digits = 3)`. @XueReedVanAert2023 suggest thresholds of 0.1, 0.23 and 0.41 for small, medium and large Fisher Z values, suggesting the partial correlations we find between productivity and GenAI use are relatively small.
+
+Like table I, table VI again suggest that experimental studies and quantitative outcomes show a stronger association between productivity and GenAI use. However, in contrast to table I, studies evaluating ChatGPT, rather than other GenAI tools, seem to show stronger associations with productivity.
+
+## IX. Weighting Estimates - Fisher Z
+
+```{r, include=FALSE}
+# different weightings
+######################################
+#########              ###############
+######### table1 - OLS ###############
+#########              ###############
+######################################
+
+table1.1 = lm(z~1,data=DT)
+coef_test(table1.1, cluster=DT$ID, vcov = "CR2") 
+
+AIC(table1.1)
+BIC(table1.1)
+
+###############################################
+#########                       ###############
+######### table1 - Fixed Effect ###############
+#########                       ###############
+###############################################
+
+table1.2  <- rma.mv(yi = z, 
+                 V = sez^2, 
+                 data = DT, 
+                 method ="FE")
+table1.2
+
+coef_test(table1.2, cluster=DT$ID, vcov = "CR2")
+
+
+
+
+
+#################################################
+#########                         ###############
+######### table1 - Random Effects ###############
+#########                         ###############
+#################################################
+
+table1.3 <- rma.mv(z ~ 1,
+                   V = sez^2,
+                   random = ~ 1 | obs,
+                   data = DT)
+table1.3
+
+
+coef_test(table1.3, cluster=DT$ID, vcov = "CR2") 
+
+
+
+# i2 and tau2 -doesnt work with multivariat
+# but univariate gives same results but has these
+
+table1.3a <- rma(z ~ 1,
+                   vi = sez^2,
+                   random = ~ 1 | obs,
+                   data = DT)
+table1.3a$tau2
+REI2<-table1.3a$I2
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table1.2, table1.3)
+
+
+###################################
+#########           ###############
+######### table1 3L ###############
+#########           ###############
+###################################
+
+table1.4 <- rma.mv(z ~ 1,
+                   V = sez^2,
+                   random = ~ 1 | ID/obs,
+                   data = DT)
+table1.4 
+coef_test(table1.4, cluster=DT$ID, vcov = "CR2")
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table1.3, table1.4)
+
+
+
+#######################################
+#########               ###############
+######### table1 3L-VCV ###############
+#########               ###############
+#######################################
+
+## CHE - rho = 0.15
+V_list <- impute_covariance_matrix(vi = (DT$sez)^2, 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table1.5 <- rma.mv(yi=z, 
+                     V = V_list, 
+                     random = ~1 | ID/obs, 
+                     data=DT, 
+                     method="REML")
+
+table1.5
+
+coef_test(table1.5, cluster=DT$ID, vcov = "CR2") 
+
+
+
+### Compute AIC and BIC
+AIC(table1.5)
+BIC(table1.5)
+
+# preparation for table
+# the vcov_fe etc only works for vcov_ols, the rest doesnt work
+# so the solution is just to copy the clustered se and p values to the tables
+
+a<-coef_test(table1.2, cluster=DT$ID, vcov = "CR2")
+table1.2$se=a$SE
+table1.2$pval=a$p_Satt
+
+a<-coef_test(table1.3, cluster=DT$ID, vcov = "CR2")
+table1.3$se=a$SE
+table1.3$pval=a$p_Satt
+
+a<-coef_test(table1.4, cluster=DT$ID, vcov = "CR2")
+table1.4$se=a$SE
+table1.4$pval=a$p_Satt
+
+a<-coef_test(table1.5, cluster=DT$ID, vcov = "CR2")
+table1.5$se=a$SE
+table1.5$pval=a$p_Satt
+
+
+
+
+
+vcov_ols <- vcovCR(table1.1, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table1.2, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table1.3, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table1.4, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table1.5, cluster = DT$ID, type = "CR2")
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table1.1, "Fixed Effects" = table1.2, "Random Effects" = table1.3, "3L Effects" = table1.4, "3L-VCV Effects" = table1.5)
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+```
+
+```{r, echo=FALSE}
+
+# Convert to list format for modelsummary
+library(flextable)
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+
+table<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,             # Use robust SEs
+             gof_map = gm,coef_rename = c("(Intercept)" = "overall"), output = "flextable")    
+
+# Add title above the table
+table <- flextable::add_header_lines(table, values = "Table VII - Averaging Estimates using Various Weights %")
+
+table <- flextable::add_footer_lines(table, values = "Notes: The estimated 'overall' effect is the result of a regression of a Fisher Z score, on a constant. The different models make different assumptions about the error terms as described in the text.")
+
+
+# Make table fit to window
+table <- flextable::autofit(table)
+table%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+# Save table to Word
+flextable::save_as_docx(table, path = "table.docx")
+
+
+```
+
+Table VII reweighs the Fisher Z estimates, giving higher weights to more precise estimates. The model with the lowest AIC is now the 3-level method (without VCV, so putting rho at zero) suggest the overall average Fisher Z score to be about `r formatC(table1.4$beta[1], format = "f", digits = 3)` which suggest a medium effect. Of course, this estimate does not account for publication bias.
+
+## X. Correcting for Publication Bias - Fisher Z
+
+Table VIII shows some signs of publication bias, though the publication bias is insignificant for the models with the lowest AIC score.
+
+```{r, include=FALSE}
+# CORRECTING FOR PUBLCIATION BIAS WITHOUT CONTROL VARIABLES
+
+######################################
+#########              ###############
+######### table2 - OLS ###############
+#########              ###############
+######################################
+
+table2.1 = lm_robust(z~sez,data=DT,clusters=ID)
+summary(table2.1)
+
+
+### Fit OLS using lm() to be able to compute AIC and BIC
+table2.1_lm = lm(z ~ sez, data = DT)
+AIC(table2.1_lm)
+BIC(table2.1_lm)
+
+###############################################
+#########                       ###############
+######### table2 - Fixed Effect ###############
+#########                       ###############
+###############################################
+
+table2.2  <- rma.mv(z ~ 1+sez, 
+                    V = sez^2, 
+                    data = DT, 
+                    method ="FE")
+table2.2
+coef_test(table2.2, cluster=DT$ID, vcov = "CR2") 
+
+
+#################################################
+#########                         ###############
+######### table2 - Random Effects ###############
+#########                         ###############
+#################################################
+
+table2.3 <- rma.mv(z ~ 1+sez,
+                   V = sez^2,
+                   random = ~ 1 | obs,
+                   method="REML",
+                   data = DT)
+
+table2.3
+coef_test(table2.3, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table2.2, table2.3)
+
+###################################
+#########           ###############
+######### table2 3L ###############
+#########           ###############
+###################################
+
+table2.4 <- rma.mv(z ~ 1+sez,
+                   V = sez^2,
+                   random = ~ 1 | ID/obs,
+                   data = DT)
+table2.4
+coef_test(table2.4, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table2.3, table2.4)
+
+#######################################
+#########               ###############
+######### table1 3L-VCV ###############
+#########               ###############
+#######################################
+
+## CHE - rho = 0.15
+V_list <- impute_covariance_matrix(vi = (DT$sez^2), 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table2.5 <- rma.mv(z ~ 1+sez,
+                   V = V_list, 
+                   random = ~1 | ID/obs, 
+                   data=DT, 
+                   method="REML")
+
+table2.5
+coef_test(table2.5, cluster=DT$ID, vcov = "CR2") 
+
+
+
+### Compute AIC and BIC
+AIC(table2.5)
+BIC(table2.5)
+
+
+# modelsummary doesnt allow to change the vcov for rma so we have to do it manually
+
+a<-coef_test(table2.2, cluster=DT$ID, vcov = "CR2")
+table2.2$se=a$SE
+table2.2$pval=a$p_Satt
+
+a<-coef_test(table2.3, cluster=DT$ID, vcov = "CR2")
+table2.3$se=a$SE
+table2.3$pval=a$p_Satt
+
+a<-coef_test(table2.4, cluster=DT$ID, vcov = "CR2")
+table2.4$se=a$SE
+table2.4$pval=a$p_Satt
+
+a<-coef_test(table2.5, cluster=DT$ID, vcov = "CR2")
+table2.5$se=a$SE
+table2.5$pval=a$p_Satt
+
+
+
+vcov_ols <- vcovCR(table2.1_lm, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table2.2, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table2.3, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table2.4, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table2.5, cluster = DT$ID, type = "CR2")
+
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table2.1_lm, "Fixed Effects" = table2.2, "Random Effects" = table2.3, "3L Effects" = table2.4, "3L-VCV Effects" = table2.5)
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+
+
+```
+
+```{r, echo=FALSE}
+
+
+# Convert to list format for modelsummary
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+table2<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,             # Use robust SEs
+             gof_map = gm,  coef_rename = c("(Intercept)" = "intercept", "sez" = "Standard Error"), output = "flextable")    
+
+
+# Add title above the table
+table2 <- flextable::add_header_lines(table2, values = "Table VIII - Publication Bias %  - PET")
+
+table2 <- flextable::add_footer_lines(table2, values = "Notes: The estimated 'overall' effect is the result of a regression of the Fisher Z score on a constant and the standard error of the Fisher Z score as a control variable, to capture publication bias. The different models make different assumptions about the error terms as described in the text.")
+
+
+# Make table fit to window
+table2 <- flextable::autofit(table2)
+table2%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+# Save table to Word
+flextable::save_as_docx(table2, path = "table2.docx")
+
+
+```
+
+Controlling for publication bias reduces the association between GenAI and productivity somewhat to about `r formatC(table2.4$beta[1], format = "f", digits = 3)`
+
+## XI. PEESE Analysis - Fisher Z
+
+Having confirmed an effect is likely to exist, we next run the PEESE procedure which controls for the squared standard error (instead of just the standard error).
+
+```{r, include=FALSE, echo=FALSE}
+
+DT$sezsq<-DT$sez^2
+
+
+# CORRECTING FOR PUBLCIATION BIAS WITHOUT CONTROL VARIABLES
+
+######################################
+#########              ###############
+######### table2p - OLS ###############
+#########              ###############
+######################################
+
+table2.1p = lm_robust(z~sezsq,data=DT,clusters=ID)
+summary(table2.1)
+
+
+### Fit OLS using lm() to be able to compute AIC and BIC
+table2.1_lmp = lm(z ~ sezsq, data = DT)
+AIC(table2.1_lmp)
+BIC(table2.1_lmp)
+
+###############################################
+#########                       ###############
+######### table2 - Fixed Effect ###############
+#########                       ###############
+###############################################
+
+table2.2p  <- rma.mv(z ~ 1+sezsq, 
+                    V = sez^2, 
+                    data = DT, 
+                    method ="FE")
+coef_test(table2.2p, cluster=DT$ID, vcov = "CR2")
+
+
+
+#################################################
+#########                         ###############
+######### table2 - Random Effects ###############
+#########                         ###############
+#################################################
+
+table2.3p <- rma.mv(z ~ 1+sezsq,
+                   V = sez^2,
+                   random = ~ 1 | obs,
+                   method="REML",
+                   data = DT)
+coef_test(table2.3p, cluster=DT$ID, vcov = "CR2")
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table2.2p, table2.3p)
+
+###################################
+#########           ###############
+######### table2 3L ###############
+#########           ###############
+###################################
+
+table2.4p <- rma.mv(z ~ 1+sezsq,
+                   V = sez^2,
+                   random = ~ 1 | ID/obs,
+                   data = DT)
+table2.4p
+
+coef_test(table2.4p, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table2.3p, table2.4p)
+
+#######################################
+#########               ###############
+######### table1 3L-VCV ###############
+#########               ###############
+#######################################
+
+## CHE - rho = 0.15
+V_list <- impute_covariance_matrix(vi = (DT$sez^2), 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table2.5p <- rma.mv(z ~ 1+sezsq,
+                   V = V_list, 
+                   random = ~1 | ID/obs, 
+                   data=DT, 
+                   method="REML")
+coef_test(table2.5p, cluster=DT$ID, vcov = "CR2") 
+
+
+
+### Compute AIC and BIC
+AIC(table2.5p)
+BIC(table2.5p)
+
+
+
+# we now put the robust se in the table so we can later use it with modelsummary
+a<-coef_test(table2.2p, cluster=DT$ID, vcov = "CR2") 
+table2.2p$se=a$SE
+table2.2p$pval=a$p_Satt
+
+a<-coef_test(table2.3p, cluster=DT$ID, vcov = "CR2") 
+table2.3p$se=a$SE
+table2.3p$pval=a$p_Satt
+
+
+a<-coef_test(table2.4p, cluster=DT$ID, vcov = "CR2") 
+table2.4p$se=a$SE
+table2.4p$pval=a$p_Satt
+
+a<-coef_test(table2.5p, cluster=DT$ID, vcov = "CR2") 
+table2.5p$se=a$SE
+table2.5p$pval=a$p_Satt
+
+
+vcov_ols <- vcovCR(table2.1_lmp, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table2.2p, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table2.3p, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table2.4p, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table2.5p, cluster = DT$ID, type = "CR2")
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table2.1_lmp, "Fixed Effects" = table2.2p, "Random Effects" = table2.3p, "3L Effects" = table2.4p, "3L-VCV Effects" = table2.5p)
+# model summary doesnt really use the vcov list for rma objects so that's 
+# why we changed value in the tables themselves
+# for ols it takes the robust ones, but for the rest i takes the values we
+#put there from the robust specification
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+
+
+```
+
+```{r, echo=FALSE}
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+
+# Convert to list format for modelsummary
+
+table2p<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,             # Use robust SEs
+             gof_map = gm,  coef_rename = c("(Intercept)" = "intercept", "sezsq" = "St. Error^2"), output = "flextable")    
+
+
+# Add title above the table
+table2p <- flextable::add_header_lines(table2p, values = "Table IX - Publication Bias - PEESE")
+
+table2p <- flextable::add_footer_lines(table2p, values = "Notes: The estimated 'overall' effect is the result of a regression of the estimate of the impact of GenAI in productivity, measured as percentage changes in productivity, on a constant and the square of the standard error of the estimate, to control for publication bias. The different models make different assumptions about the error terms as described in the text.")
+
+
+
+# Make table fit to window
+table2p <- flextable::autofit(table2p)
+table2p%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+# Save table to Word
+flextable::save_as_docx(table2p, path = "table2p.docx")
+
+
+```
+
+Interestingly, we again find less evidence of publication bias once we control for the square of the error term, and the best estimates of the overall effect again gain in size to a moderate effect (`r formatC(table2.4p$beta[1], format = "f", digits = 1)`).
+
+## XII. Heterogeneity Analysis - Fisher Z
+
+Interestingly, a heterogeneity analysis suggest little difference in partial correlation between GenAI tools use and outcomes measured in quality or quantity, between different industries or GenAI tools.
+
+```{r, include=FALSE}
+# correcting for Bias and using control variables
+
+#######################################
+#########               ###############
+######### table2 - OLSa ###############
+#########               ###############
+#######################################
+
+table2.1a = lm_robust(z~sezsq+Quantity + Software + Experiment+ChatGPT,data=DT,clusters=ID)
+summary(table2.1a)
+
+## This is to get the predicted value of z when sez = 0 and all the other variables are 
+## evaluated at their means.
+
+newmods <- data.frame(sezsq = 0, 
+  Quantity = mean(DT$Quantity), 
+  Experiment = mean(DT$Experiment),
+  Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.1a, newdata = newmods, se.fit=TRUE)
+
+### Fit OLS using lm() to be able to compute AIC and BIC
+table2.1a_lm = lm(z ~ sezsq+Quantity+ Software + Experiment+ChatGPT, data = DT)
+AIC(table2.1a_lm)
+BIC(table2.1a_lm)
+
+################################################
+#########                        ###############
+######### table2 - Fixed Effecta ###############
+#########                        ###############
+###############################################
+
+table2.2a  <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT, 
+                     V = sez^2, 
+                     data = DT, 
+                     method ="FE")
+coef_test(table2.2a, cluster=DT$ID, vcov = "CR2")
+
+## To get the predicted constant term when sez=0, I have to use
+## CR1 standard errors
+
+table2.2aa = robust(table2.2a, DT$ID, clubSandwich=TRUE)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.2aa, newmods = newmods, addx = TRUE)
+
+
+
+
+##################################################
+#########                          ###############
+######### table2 - Random Effectsa ###############
+#########                          ###############
+##################################################
+
+table2.3a <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT,
+                    V = sez^2,
+                    random = ~ 1 | obs,
+                    method="REML",
+                    data = DT)
+coef_test(table2.3a, cluster=DT$ID, vcov = "CR2") 
+
+## To get the predicted constant term when sez=0, I have to use
+## CR1 standard errors
+
+table2.3aa = robust(table2.3a, DT$ID, clubSandwich=TRUE)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.3aa, newmods = newmods, addx = TRUE)
+
+
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing fixed effect 
+# and random effects
+anova(table2.2a, table2.3a)
+
+
+
+
+####################################
+#########            ###############
+######### table2 3La ###############
+#########            ###############
+####################################
+
+table2.4a <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT,
+                    V = sez^2,
+                    random = ~ 1 | ID/obs,
+                    data = DT)
+coef_test(table2.4a, cluster=DT$ID, vcov = "CR2") 
+
+## To get the predicted constant term when sez=0, I have to use
+## CR1 standard errors
+
+table2.4aa = robust(table2.4a, DT$ID, clubSandwich=TRUE)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+predict(table2.4aa, newmods = newmods, addx = TRUE)
+
+### Compute AIC and BIC and conduct likelihood-ratio test comparing random effects
+# and 3L
+anova(table2.3a, table2.4a)
+
+########################################
+#########                ###############
+######### table1 3L-VCVa ###############
+#########                ###############
+########################################
+
+## CHE - rho = 0.15
+V_list <- impute_covariance_matrix(vi = (DT$sez^2), 
+                                   cluster = DT$ID,
+                                   r = 0.15)
+table2.5a <- rma.mv(z~sezsq+Quantity + Software + Experiment+ChatGPT,
+                    V = V_list, 
+                    random = ~1 | ID/obs, 
+                    data=DT, 
+                    method="REML")
+coef_test(table2.5a, cluster=DT$ID, vcov = "CR2") 
+
+
+### Compute AIC and BIC
+AIC(table2.5a)
+BIC(table2.5a)
+
+newmods <- c(sezsq = 0, 
+                      Quantity = mean(DT$Quantity), 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+predict(table2.5aa, newmods = newmods, addx = TRUE)
+
+# for quantity
+
+newmods <- c(sezsq = 0, 
+                      Quantity = 1, 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+bestpracticequantity<-predict(table2.5aa, newmods = newmods, addx = TRUE)
+# for quality
+
+newmods <- c(sezsq = 0, 
+                      Quantity = 0, 
+                      Experiment = mean(DT$Experiment),
+                      Software = mean(DT$Software),ChatGPT = mean(DT$ChatGPT))
+
+table2.5aa = robust(table2.5a, DT$ID, clubSandwich=TRUE)
+
+bestpracticequality<-predict(table2.5aa, newmods = newmods, addx = TRUE)
+
+
+# Regression of sez on all other explanatory variables
+#check = lm(sez~Quantity+ Software + Experiment+ChatGPT,data=DT)
+#summary(check)
+
+# for table
+
+a<-coef_test(table2.2a, cluster=DT$ID, vcov = "CR2")
+table2.2a$se=a$SE
+table2.2a$pval=a$p_Satt
+
+
+
+a<-coef_test(table2.3a, cluster=DT$ID, vcov = "CR2")
+table2.3a$se=a$SE
+table2.3a$pval=a$p_Satt
+
+
+a<-coef_test(table2.4a, cluster=DT$ID, vcov = "CR2")
+table2.4a$se=a$SE
+table2.4a$pval=a$p_Satt
+
+a<-coef_test(table2.5a, cluster=DT$ID, vcov = "CR2")
+table2.5a$se=a$SE
+table2.5a$pval=a$p_Satt
+
+
+
+
+
+vcov_ols <- vcovCR(table2.1a_lm, cluster = DT$ID, type = "CR2")
+vcov_fe <- vcovCR(table2.2a, cluster = DT$ID, type = "CR2")
+vcov_re <- vcovCR(table2.3a, cluster = DT$ID, type = "CR2")
+vcov_3L <- vcovCR(table2.4a, cluster = DT$ID, type = "CR2")
+vcov_3LVCV <- vcovCR(table2.5a, cluster = DT$ID, type = "CR2")
+
+# Store models and their robust variance-covariance matrices
+models <- list("OLS" = table2.1a_lm, "Fixed Effects" = table2.2a, "Random Effects" = table2.3a, "3L Effects" = table2.4a, "3L-VCV Effects" = table2.5a)
+vcov_list <- list("OLS" = vcov_ols, "Fixed Effects" = vcov_fe, "Random Effects" = vcov_re, "3L Effects" = vcov_3L, "3L-VCV Effects" = vcov_3LVCV)
+
+
+
+```
+
+```{r, echo=FALSE}
+
+# Convert to list format for modelsummary
+gm <- modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[1] <- FALSE
+gm$omit[17] <- FALSE
+
+
+
+table3<-modelsummary(models, 
+             statistic = "({std.error}{stars})",  # Show SEs in parentheses
+             vcov = vcov_list,  coef_rename = c("(Intercept)" = "intercept", "sezsq" = "St. Error^2"), 
+             gof_map = gm, output = "flextable")    
+
+# Add title above the table
+table3 <- flextable::add_header_lines(table3, values = "Table X - Heterogeneity Analysis %")
+
+table3 <- flextable::add_footer_lines(table3, values = "Notes: The estimated 'overall' effect is the result of a regression of the Fisher Z score, on a constant, the square of the standard error of the Fisher Z score (to capture publication bias) and several study characteristics. The different models make different assumptions about the error terms as described in the text.")
+
+
+# Make table fit to window
+table3 <- flextable::autofit(table3)
+table3%>%font(part = "all", fontname = "Times New Roman") %>%fontsize(size = 12, part = "all") %>% autofit() 
+# Save table to Word
+flextable::save_as_docx(table3, path = "table3.docx")
+
+
+```
+
+But there is evidence that experimental studies have about `r paste0(formatC(table2.5a$beta[5,1] * 100, format = "f", digits = 1)," percentage points")` Fisher Z scores than quasi-experimental studies.
+
+## Conclusions
+
+In the short period, about two years, since Generative AI tools like CoPilot and ChatGPT have been launched, a flurry of papers analyzing the impact of these tools on productivity in the workplace have been written. By now, these studies span a large number of settings, from writing software, doing data analysis, developing marketing ads, doing legal analysis to writing blogs or stories. In this paper, we summarize this literature and perform a meta-analysis on more than 1000 estimates from 34 studies.
+
+We find that the vast majority of studies finds a positive impact of the use of GenAI tools on productivity, though about a third warn that GenAI tools can have negative effects for the productivity of some people or some outcomes.
+
+Our preferred specifications (3-level models, correcting for publication bias) suggests that once we correct for publication bias, the overall average effect, across studies, of GenAI use on productivity is about 16.7%. We further find that association between GenAI use and productivity as measured by a Fisher Z score (which is based on the partial correlation) is about 0.11, which can be categorized as a medium effect.
+
+Differences in study or estimate characteristics have limited power in explaining differences across estimated effect sizes. Estimates that measure the quantitative impact of GenAI tools are on average, 12.5 percentage points higher than estimates that measure the qualitative impact, though this difference is not statistically significant. Similarly, the Fisher Z score does not show much difference between qualitative than quantitative studies. We do find, however, that Fisher Z scores (but not percentage changes) are significantly higher for experimental studies than for quasi-experimental studies.
+
+While about a third of the studies we analyzed explicitly indicated they used GenAI tools, none of these studies provided an estimate of how much time they saved or how much the quality of their paper increased as the result of using these tools. This study, and our experience writing this paper confirms this, suggest 16.7% is a reasonable estimate. That being said, this review is a review of the early studies of GenAI on productivity. As GenAi tools might continue to get better, updating this meta-analysis in the future might well be possible without much help of the current authors.
+
+## List of Studies Used in the Meta-Analysis.
+
+@alrefai2024, @asam2024, @brynjolfsson2024, @butler2024, @campero2022, @chen2024, @choi2023, @cui2024, @dellacqua2024, @dellacqua2025, @doshi2024, @edelman2023, @fitzpatrick2025, @freeman2024, @fu2024, @gambacorta2024, @haslberger2024, @hoffmann2024, @kaisen2024, @kreitmeir2024, @merali2024, @miroyan2025, @mozannar2024, @ni2024 @noy2023, @otis2024, @peng2023, @quispe2024, @spatharioti2025, @wang2024, @wang2025, @weber2024, @wiles2024, @yeverechyahu2024, @yu2024.
+
+## References.

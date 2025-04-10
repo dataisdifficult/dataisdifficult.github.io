@@ -1,0 +1,1295 @@
+{
+    "sources": [
+        {
+            "URL": "https://arxiv.org/abs/2302.06590",
+            "author": [
+                {
+                    "family": "Peng",
+                    "given": "K."
+                },
+                {
+                    "family": "Kalliamvakou",
+                    "given": "E."
+                },
+                {
+                    "family": "Cihon",
+                    "given": "P."
+                },
+                {
+                    "dropping-particle": "&",
+                    "family": "Demirer",
+                    "given": "M."
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "peng2023",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "title": "The impact of AI on developer productivity: Evidence from GitHub copilot",
+            "title-short": "The impact of AI on developer productivity",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://economics.mit.edu/sites/default/files/2024-04/The%20Simple%20Macroeconomics%20of%20AI.pdf",
+            "author": [
+                {
+                    "family": "Acemoglu",
+                    "given": "Daron"
+                }
+            ],
+            "id": "Acemoglu2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "The simple macroeconomics of AI",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://www.nber.org/papers/w31161",
+            "author": [
+                {
+                    "family": "Brynjolfsson",
+                    "given": "Erik"
+                },
+                {
+                    "family": "Li",
+                    "suffix": "Dannielle"
+                },
+                {
+                    "family": "Raymond",
+                    "given": "Lindsey"
+                }
+            ],
+            "container-title": "NBER Working Paper Series",
+            "id": "brynjolfsson2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Generative AI at work",
+            "type": "article-journal",
+            "volume": "31161"
+        },
+        {
+            "URL": "https://www.hbs.edu/ris/download.aspx?name=24-013.pdf",
+            "author": [
+                {
+                    "family": "Dell’Acqua",
+                    "given": "Fabrizio"
+                },
+                {
+                    "family": "Rajendran",
+                    "given": "Saran"
+                },
+                {
+                    "family": "McFowland III",
+                    "given": "Edward"
+                },
+                {
+                    "family": "Krayer",
+                    "given": "Lisa"
+                },
+                {
+                    "family": "Mollick",
+                    "given": "Ethan"
+                },
+                {
+                    "family": "Candelon",
+                    "given": "François"
+                },
+                {
+                    "family": "Lifshitz-Assaf",
+                    "given": "Hila"
+                },
+                {
+                    "family": "Lakhani",
+                    "given": "Karim R."
+                },
+                {
+                    "family": "Kellogg",
+                    "given": "Katherine C."
+                }
+            ],
+            "container-title": "Harvard Business School Working Paper Series",
+            "id": "dellacqua2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Navigating the jagged technological frontier: Field experimental evidence of the effects of AI on knowledge worker productivity and quality",
+            "title-short": "Navigating the jagged technological frontier",
+            "type": "article-journal",
+            "volume": "24-013"
+        },
+        {
+            "URL": "https://osf.io/hdjpk_v1",
+            "author": [
+                {
+                    "family": "Otis",
+                    "given": "Nicholas G."
+                },
+                {
+                    "family": "Clarke",
+                    "given": "Rowan"
+                },
+                {
+                    "family": "Delecourt",
+                    "given": "Solene"
+                },
+                {
+                    "family": "Holtz",
+                    "given": "David"
+                },
+                {
+                    "family": "Koning",
+                    "given": "Rembrand"
+                }
+            ],
+            "container-title": "Harvard Business School Working Paper Series",
+            "id": "otis2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "The uneven impact of generative AI on entrepreneurial performance",
+            "type": "article-journal",
+            "volume": "24-042"
+        },
+        {
+            "URL": "https://www.science.org/doi/10.1126/science.adh2586",
+            "author": [
+                {
+                    "family": "Noy",
+                    "given": "Shakked"
+                },
+                {
+                    "family": "Zhang",
+                    "given": "Whitney"
+                }
+            ],
+            "container-title": "Science",
+            "id": "noy2023",
+            "issue": "6654",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "page": "187-192",
+            "title": "Experimental evidence on the productivity effects of generative artificial intelligence",
+            "type": "article-journal",
+            "volume": "381"
+        },
+        {
+            "URL": "https://minnesotalawreview.org/wp-content/uploads/2024/11/3-ChoiMonahanSchwarcz.pdf",
+            "author": [
+                {
+                    "family": "Choi",
+                    "given": "Jonathan H."
+                },
+                {
+                    "family": "Monahan",
+                    "given": "Amy B."
+                },
+                {
+                    "family": "Schwarcz",
+                    "given": "Daniel"
+                }
+            ],
+            "container-title": "Minnesota Law Review",
+            "id": "choi2023",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "title": "Lawyering in the age of artificial intelligence",
+            "type": "article-journal",
+            "volume": "11"
+        },
+        {
+            "URL": "https://emmawiles.github.io/storage/reskill.pdf",
+            "author": [
+                {
+                    "family": "Wiles",
+                    "given": "Emma"
+                },
+                {
+                    "family": "Krayer",
+                    "given": "Lisa"
+                },
+                {
+                    "family": "Abbadi",
+                    "given": "Mohamed"
+                },
+                {
+                    "family": "Awasthi",
+                    "given": "Urvi"
+                },
+                {
+                    "family": "Kennedy",
+                    "given": "Ryan"
+                },
+                {
+                    "family": "Mishkin",
+                    "given": "Pamela"
+                },
+                {
+                    "family": "Sack",
+                    "given": "Daniel"
+                },
+                {
+                    "family": "Candelon",
+                    "given": "Francois"
+                }
+            ],
+            "id": "wiles2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "GenAI as an exoskeleton: Experimental evidence on knowledge workers using GenAI on new skills",
+            "title-short": "GenAI as an exoskeleton",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2404.02806v2",
+            "author": [
+                {
+                    "family": "Mozannar",
+                    "given": "Hussein"
+                },
+                {
+                    "family": "Chen",
+                    "given": "Valerie"
+                },
+                {
+                    "family": "Alsobay",
+                    "given": "Mohammed"
+                },
+                {
+                    "family": "Das",
+                    "given": "Subhro"
+                },
+                {
+                    "family": "Zhao",
+                    "given": "Sebastian"
+                },
+                {
+                    "family": "Wei",
+                    "given": "Dennis"
+                },
+                {
+                    "family": "Nagireddy",
+                    "given": "Manish"
+                },
+                {
+                    "family": "Sattigeri",
+                    "given": "Prasanna"
+                },
+                {
+                    "family": "Talwalkar",
+                    "given": "Ameet"
+                },
+                {
+                    "family": "Sontag",
+                    "given": "David"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "mozannar2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "The RealHumanEval: Evaluating large language models’ abilities to support programmers",
+            "title-short": "The RealHumanEval",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1863966&dswid=-8487",
+            "author": [
+                {
+                    "family": "Alrefai",
+                    "given": "Adam"
+                },
+                {
+                    "family": "Alsadi",
+                    "given": "Mahmoud"
+                }
+            ],
+            "container-title": "Independent Thesis",
+            "id": "alrefai2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Large language models for documentation: A study on the effects on developer productivity",
+            "title-short": "Large language models for documentation",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://dl.acm.org/doi/10.1145/3661145",
+            "author": [
+                {
+                    "family": "Weber",
+                    "given": "Thomas"
+                },
+                {
+                    "family": "Brandmaier",
+                    "given": "Maximilian"
+                },
+                {
+                    "family": "Schmidt",
+                    "given": "Albrecht"
+                },
+                {
+                    "family": "Mayer",
+                    "given": "Sven"
+                }
+            ],
+            "container-title": "Proceedings of the ACM on Human-Computer Interaction",
+            "id": "weber2024",
+            "issue": "EICS",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "page": "1-29",
+            "title": "Significant productivity gains through programming with large language models",
+            "type": "article-journal",
+            "volume": "8"
+        },
+        {
+            "URL": "https://www.bis.org/publ/work1208.htm",
+            "author": [
+                {
+                    "family": "Gambacorta",
+                    "given": "Leonardo"
+                },
+                {
+                    "family": "Qiu",
+                    "given": "Han"
+                },
+                {
+                    "family": "Shan",
+                    "given": "Shuo"
+                },
+                {
+                    "family": "Rees",
+                    "given": "Daniel M."
+                }
+            ],
+            "container-title": "BIS Working Papers",
+            "id": "gambacorta2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Generative AI and labour productivity: A field experiment on coding",
+            "title-short": "Generative AI and labour productivity",
+            "type": "article-journal",
+            "volume": "1208"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2406.11046v1",
+            "author": [
+                {
+                    "family": "Quispe",
+                    "given": "Alexander"
+                },
+                {
+                    "family": "Grijalba",
+                    "given": "Rodrigo"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "quispe2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Impact of the availability of chat-GPT on software development activity",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://arxiv.org/pdf/2409.02391v2",
+            "author": [
+                {
+                    "family": "Merali",
+                    "given": "Ali"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "merali2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Scaling laws for economic productivity: Experimental evidence in LLM-assisted translation",
+            "title-short": "Scaling laws for economic productivity",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2409.14511",
+            "author": [
+                {
+                    "family": "Freeman",
+                    "given": "Brian S."
+                },
+                {
+                    "family": "Arriola",
+                    "given": "Kendall"
+                },
+                {
+                    "family": "Cottell",
+                    "given": "Dan"
+                },
+                {
+                    "family": "Lawlor",
+                    "given": "Emmett"
+                },
+                {
+                    "family": "Erdman",
+                    "given": "Matt"
+                },
+                {
+                    "family": "Sutherland",
+                    "given": "Trevor"
+                },
+                {
+                    "family": "Wells",
+                    "given": "Brian"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "freeman2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Evaluation of task specific productivity improvements using a generative artificial intelligence personal assistant tool",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4858507",
+            "author": [
+                {
+                    "family": "Kaisen",
+                    "given": "Joshua"
+                },
+                {
+                    "family": "Li",
+                    "given": "Meng"
+                },
+                {
+                    "family": "Lu",
+                    "given": "Shijie"
+                }
+            ],
+            "container-title": "SSRN",
+            "id": "kaisen2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "AI and productivity: The impact of ChatGPT’s release on blogging",
+            "title-short": "AI and productivity",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4594466",
+            "author": [
+                {
+                    "family": "Haslberger",
+                    "given": "Matthias"
+                },
+                {
+                    "family": "Gingrich",
+                    "given": "Jane"
+                },
+                {
+                    "family": "Bhatia",
+                    "given": "Jasmine"
+                }
+            ],
+            "container-title": "SSRN",
+            "id": "haslberger2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "No great equalizer: Experimental evidence on AI in the UK labor market",
+            "title-short": "No great equalizer",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4422548",
+            "author": [
+                {
+                    "family": "Kreitmeir",
+                    "given": "David"
+                },
+                {
+                    "family": "Raschky",
+                    "given": "Paul"
+                }
+            ],
+            "container-title": "SSRN",
+            "id": "kreitmeir2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "The unintended consequences of censoring digital technology - evidence from italy’s ChatGPT ban",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4648686",
+            "author": [
+                {
+                    "family": "Edelman",
+                    "given": "Benjamin G."
+                },
+                {
+                    "family": "Ngwe",
+                    "given": "Donald"
+                },
+                {
+                    "family": "Peng",
+                    "given": "Sida"
+                }
+            ],
+            "container-title": "SSRN",
+            "id": "edelman2023",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "title": "Measuring the impact of AI on information worker productivity",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://dangoldstein.com/papers/spatharioti_rothschild_goldstein_hofman_LLM_Search_CHI25.pdf",
+            "author": [
+                {
+                    "family": "Spatharioti",
+                    "given": "Sofia Eleni"
+                },
+                {
+                    "family": "Rothschild",
+                    "given": "David"
+                },
+                {
+                    "family": "Goldstein",
+                    "given": "Daniel G."
+                },
+                {
+                    "family": "Hofman",
+                    "given": "Jake M."
+                }
+            ],
+            "container-title": "CHI",
+            "id": "spatharioti2025",
+            "issued": {
+                "date-parts": [
+                    [
+                        2025
+                    ]
+                ]
+            },
+            "title": "Effects of LLM-based search on decision making: Speed, accuracy, and overreliance",
+            "title-short": "Effects of LLM-based search on decision making",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://dl.acm.org/doi/10.1145/3643758",
+            "author": [
+                {
+                    "family": "Wang",
+                    "given": "Wei"
+                },
+                {
+                    "family": "Ning",
+                    "given": "Huilong"
+                },
+                {
+                    "family": "Zhang",
+                    "given": "Gaowei"
+                },
+                {
+                    "family": "Liu",
+                    "given": "Libo"
+                },
+                {
+                    "family": "Wang",
+                    "given": "Yi"
+                }
+            ],
+            "container-title": "Proceedings of the ACM on Software Engineering",
+            "id": "wang2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "page": "699-721",
+            "title": "Rocks coding, not development: A human-centric, experimental evaluation of LLM-supported SE tasks",
+            "title-short": "Rocks coding, not development",
+            "type": "article-journal",
+            "volume": "1"
+        },
+        {
+            "URL": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4945566",
+            "author": [
+                {
+                    "family": "Cui",
+                    "given": "Zheyuan"
+                },
+                {
+                    "family": "Demirer",
+                    "given": "Mert"
+                },
+                {
+                    "family": "Jaffe",
+                    "given": "Sonia"
+                },
+                {
+                    "family": "Musolff",
+                    "given": "Leon"
+                },
+                {
+                    "family": "Peng",
+                    "given": "Sida"
+                },
+                {
+                    "family": "Salz",
+                    "given": "Tobias"
+                }
+            ],
+            "container-title": "SSRN",
+            "id": "cui2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "The effects of generative AI on high skilled work: Evidence from three field experiments with software developers",
+            "title-short": "The effects of generative AI on high skilled work",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://www.proquest.com/openview/ef4a16ccdd3ada374a981a60edf32f2a/1.pdf?cbl=36534&pq-origsite=gscholar",
+            "author": [
+                {
+                    "family": "Yu",
+                    "given": "Jason"
+                },
+                {
+                    "family": "Qi",
+                    "given": "Cheryl"
+                }
+            ],
+            "container-title": "Review of Business",
+            "id": "yu2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "The impact of generative AI on employment and labor productivity",
+            "type": "article-journal",
+            "volume": "44"
+        },
+        {
+            "URL": "https://ssrn.com/abstract=4877505",
+            "author": [
+                {
+                    "family": "Asam",
+                    "given": "Dominik"
+                },
+                {
+                    "family": "Heller",
+                    "given": "David"
+                }
+            ],
+            "container-title": "SSRN",
+            "id": "asam2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Generative AI and firm-level productivity: Evidence from startup funding dynamics",
+            "title-short": "Generative AI and firm-level productivity",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://dl.acm.org/doi/10.1145/3641554.3701965",
+            "author": [
+                {
+                    "family": "Miroyan",
+                    "given": "Mihran"
+                },
+                {
+                    "family": "Mitra",
+                    "given": "Chancharik"
+                },
+                {
+                    "family": "Jain",
+                    "given": "Rishi"
+                },
+                {
+                    "family": "Ranade",
+                    "given": "Gireeja"
+                },
+                {
+                    "family": "Norouzi",
+                    "given": "Narges"
+                }
+            ],
+            "container-title": "ACM",
+            "id": "miroyan2025",
+            "issued": {
+                "date-parts": [
+                    [
+                        2025
+                    ]
+                ]
+            },
+            "title": "Analyzing pedagogical quality and efficiency of LLM responses with TA feedback to live student questions",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://pubsonline.informs.org/doi/10.1287/mnsc.2023.03014",
+            "author": [
+                {
+                    "family": "Chen",
+                    "given": "Zenan"
+                },
+                {
+                    "family": "Chan",
+                    "given": "Jason"
+                }
+            ],
+            "container-title": "Management Science",
+            "id": "chen2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Large language model in creative work: The role of collaboration modality and user expertise",
+            "title-short": "Large language model in creative work",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://www.science.org/doi/10.1126/sciadv.adn5290",
+            "author": [
+                {
+                    "family": "Doshi",
+                    "given": "Anil R."
+                },
+                {
+                    "family": "Hauser",
+                    "given": "Oliver P."
+                }
+            ],
+            "container-title": "Science Advances",
+            "id": "doshi2024",
+            "issue": "28",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Generative AI enhances individual creativity but reduces the collective diversity of novel content",
+            "type": "article-journal",
+            "volume": "10"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2206.12390",
+            "author": [
+                {
+                    "family": "Campero",
+                    "given": "Andres"
+                },
+                {
+                    "family": "Vaccaro",
+                    "given": "Michelle"
+                },
+                {
+                    "family": "Song",
+                    "given": "Jaeyoon"
+                },
+                {
+                    "family": "Wen",
+                    "given": "Haoran"
+                },
+                {
+                    "family": "Almaatouq",
+                    "given": "Abdullah"
+                },
+                {
+                    "family": "Malone",
+                    "given": "Thomas W."
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "campero2022",
+            "issued": {
+                "date-parts": [
+                    [
+                        2022
+                    ]
+                ]
+            },
+            "title": "A test for evaluating performance in human-computer systems",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://ssrn.com/abstract=4684662",
+            "author": [
+                {
+                    "family": "Yeverechyahu",
+                    "given": "Doron"
+                },
+                {
+                    "family": "Mayya",
+                    "given": "Raveesh"
+                },
+                {
+                    "family": "Oestreicher-Singer",
+                    "given": "Gal"
+                }
+            ],
+            "id": "yeverechyahu2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "The impact of large language models on open-source innovation: Evidence from GitHub copilot",
+            "title-short": "The impact of large language models on open-source innovation",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://conference.nber.org/conf_papers/f207681.pdf",
+            "author": [
+                {
+                    "family": "Hoffmann",
+                    "given": "Manuel"
+                },
+                {
+                    "family": "Boysel",
+                    "given": "Sam J."
+                },
+                {
+                    "family": "Nagle",
+                    "given": "Frank"
+                },
+                {
+                    "family": "Peng",
+                    "given": "Sida"
+                },
+                {
+                    "family": "Xu",
+                    "given": "Kevin"
+                }
+            ],
+            "id": "hoffmann2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Generative AI and distributed work: Evidence from open source software",
+            "title-short": "Generative AI and distributed work",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2502.09479",
+            "author": [
+                {
+                    "family": "Fitzpatrick",
+                    "given": "Trevor"
+                },
+                {
+                    "family": "Kelly",
+                    "given": "Seamus"
+                },
+                {
+                    "family": "Carey",
+                    "given": "Patrick"
+                },
+                {
+                    "family": "Walsh",
+                    "given": "David"
+                },
+                {
+                    "family": "Nugent",
+                    "given": "Ruairi"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "fitzpatrick2025",
+            "issued": {
+                "date-parts": [
+                    [
+                        2025
+                    ]
+                ]
+            },
+            "title": "Assessing generative AI value in a public sector context: Evidence from a field experiment",
+            "title-short": "Assessing generative AI value in a public sector context",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://ssrn.com/abstract=5012601",
+            "author": [
+                {
+                    "family": "Ni",
+                    "given": "Xiao"
+                },
+                {
+                    "family": "Wang",
+                    "given": "Yiwei"
+                },
+                {
+                    "family": "Feng",
+                    "given": "Tianjun"
+                },
+                {
+                    "family": "Lu",
+                    "given": "Lauren Xiaoyuan"
+                },
+                {
+                    "family": "Wang",
+                    "given": "Yitong"
+                },
+                {
+                    "family": "Zhou",
+                    "given": "Congyi"
+                }
+            ],
+            "id": "ni2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Generative AI in action: Field experimental evidence on worker performance in e-commerce customer service operations",
+            "title-short": "Generative AI in action",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2411.00168",
+            "author": [
+                {
+                    "family": "Fu",
+                    "given": "Yue"
+                },
+                {
+                    "family": "Bin",
+                    "given": "Han"
+                },
+                {
+                    "family": "Zhou",
+                    "given": "Tony"
+                },
+                {
+                    "family": "Wang",
+                    "given": "Marx"
+                },
+                {
+                    "family": "Chen",
+                    "given": "Yixin"
+                },
+                {
+                    "family": "Gomes Da Costa Lai",
+                    "given": "Zelia"
+                },
+                {
+                    "family": "Wobbrock",
+                    "given": "Jacob O."
+                },
+                {
+                    "family": "Hiniker",
+                    "given": "Alexis"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "fu2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Creativity in the age of AI: Evaluating the impact of generative AI on design outputs and designers’ creative thinking",
+            "title-short": "Creativity in the age of AI",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2410.18334",
+            "author": [
+                {
+                    "family": "Butler",
+                    "given": "Jenna"
+                },
+                {
+                    "family": "Suh",
+                    "given": "Jina"
+                },
+                {
+                    "family": "Haniyur",
+                    "given": "Sankeerti"
+                },
+                {
+                    "family": "Hadley",
+                    "given": "Constance"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "butler2024",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Dear diary: A randomized controlled trial of generative AI coding tools in the workplace",
+            "title-short": "Dear diary",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://arxiv.org/abs/2410.03017",
+            "author": [
+                {
+                    "family": "Wang",
+                    "given": "Rose E."
+                },
+                {
+                    "family": "Ribeiro",
+                    "given": "Ana T."
+                },
+                {
+                    "family": "Robinson",
+                    "given": "Carly D."
+                },
+                {
+                    "family": "Loeb",
+                    "given": "Susanna"
+                },
+                {
+                    "family": "Demszky",
+                    "given": "Dora"
+                }
+            ],
+            "container-title": "arXiv",
+            "id": "wang2025",
+            "issued": {
+                "date-parts": [
+                    [
+                        2025
+                    ]
+                ]
+            },
+            "title": "Tutor CoPilot: A human-AI approach for scaling real-time expertise",
+            "title-short": "Tutor CoPilot",
+            "type": "article-journal"
+        },
+        {
+            "URL": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5188231",
+            "author": [
+                {
+                    "family": "Dell’Acqua",
+                    "given": "Fabrizio"
+                },
+                {
+                    "family": "Ayoubi",
+                    "given": "Charles"
+                },
+                {
+                    "family": "Lifshitz-Assaf",
+                    "given": "Hila"
+                },
+                {
+                    "family": "Sadun",
+                    "given": "Raffaella"
+                },
+                {
+                    "family": "Mollick",
+                    "given": "Ethan R."
+                },
+                {
+                    "family": "Mollick",
+                    "given": "Lilach"
+                },
+                {
+                    "family": "Han",
+                    "given": "Yi"
+                },
+                {
+                    "family": "Goldman",
+                    "given": "Jeff"
+                },
+                {
+                    "family": "Nair",
+                    "given": "Hari"
+                },
+                {
+                    "family": "Taub",
+                    "given": "Stew"
+                },
+                {
+                    "family": "Lakhani",
+                    "given": "Karim R."
+                }
+            ],
+            "genre": "Working Paper",
+            "id": "dellacqua2025",
+            "issue": "25-043",
+            "issued": {
+                "date-parts": [
+                    [
+                        2025
+                    ]
+                ]
+            },
+            "publisher": "Harvard Business School",
+            "title": "The cybernetic teammate: A field experiment on generative AI reshaping teamwork and expertise",
+            "title-short": "The cybernetic teammate",
+            "type": "article-journal"
+        },
+        {
+            "author": [
+                {
+                    "family": "Doucouliagos",
+                    "given": "Chris"
+                }
+            ],
+            "container-title": "Working Paper",
+            "id": "Doucouliagos2011",
+            "issued": {
+                "date-parts": [
+                    [
+                        2011
+                    ]
+                ]
+            },
+            "title": "How large is large? Preliminary and relative guidelines for interpreting partial correlations in economics",
+            "type": "article-journal"
+        },
+        {
+            "DOI": "https://doi.org/10.1111/joes.12660",
+            "author": [
+                {
+                    "family": "Xue",
+                    "given": "Xiaobing"
+                },
+                {
+                    "family": "Reed",
+                    "given": "W. Robert"
+                },
+                {
+                    "dropping-particle": "van",
+                    "family": "Aert",
+                    "given": "Robbie C. M."
+                }
+            ],
+            "container-title": "Journal of Economic Surveys",
+            "id": "XueReedVanAert2023",
+            "issued": {
+                "date-parts": [
+                    [
+                        2024
+                    ]
+                ]
+            },
+            "title": "Social capital and economic growth: A meta‐analysis",
+            "title-short": "Social capital and economic growth",
+            "type": "article-journal"
+        }
+    ],
+    "project_biblios": []
+}
