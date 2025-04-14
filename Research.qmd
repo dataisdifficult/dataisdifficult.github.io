@@ -7,7 +7,7 @@ editor:
 
 My latest working papers:
 
-['The Impact of Generative AI on Productivity - Results of an Early Meta-Analysis' (with Allen Wu)](https://dataisdifficult.github.io/GenAI Quarto 04 04 2025 html.html).
+['The Impact of Generative AI on Productivity - Results of an Early Meta-Analysis' (with Allen Wu)](https://dataisdifficult.github.io/GenAI_and_Productivity_html.html).
 
 
 ['The Long Term Impact of War on Life Satisfaction' (with Jemesa Landers and Andrea Menclova)](https://dataisdifficult.github.io/PAPERLongTermImpactofWaronLifeSatisfaction.html).
